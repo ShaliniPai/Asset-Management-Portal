@@ -1,0 +1,190 @@
+
+
+.th {
+  font-family: Boschsansbold;
+  font-size: 14px;    padding: 0.8% 0%;
+}
+.td {
+  font-family: Boschsansreg;
+  font-size: 14px;    padding: 0.8% 0%;
+}
+
+.mini-header {
+  font-family: Boschsansreg;
+  font-size: x-small;
+  font-weight: 300; 
+}
+
+.title {
+  font-size: medium; font-family:Boschsansreg; font-size: 18px;
+} 
+
+.i{
+    font-size: x-large;
+    color:#005691;
+    padding: 10px;
+    cursor: pointer;
+  }
+
+
+  .table-type{
+    border:2px solid #cacbcd;
+    border-bottom: none;
+    padding: 0%;
+    max-height: 400px;
+    overflow-y: auto;
+    margin: 1px 20px;
+   }
+   
+   .table-div{
+   
+    border:2px solid #cacbcd;
+   //margin: 10px 10px;
+   padding: 10px;
+   }
+   
+   table,tr,td, th{
+    
+     border-bottom:2px solid #cacbcd;
+   }
+
+ 
+
+   .trash {
+    min-width: 50px !important;
+    height: 50px !important;
+   }
+  
+   .ico {
+    min-width: 30px !important;
+    height: 30px !important;
+   }
+   
+   .ico2 {
+    margin-left: 20px
+   }
+  
+//  .bt { 
+//    padding: 4px 25px;
+//  }
+ 
+.bt-d {
+  color: #005691  !important;
+  border: 2px solid #005691  !important;
+}
+
+td, th {
+  padding: 0;
+}
+
+.rb-btn {
+ font-family: Boschsansreg;
+ font-size: medium;  min-width: 150px;border: 2px solid #005691  !important;
+}
+  .bt-d:disabled {
+    color: lightgrey  !important;
+    border: 2px solid lightgrey  !important;
+  }
+
+  .bt-size { min-width: 300px }
+  
+
+  select {background-color: white;}
+
+  .rb-btn.rb-primary:disabled, .rb-btn.rb-primary.disabled {
+    background-color: lightgrey !important;
+    border-color:lightgrey !important;
+    color: #ffffff !important;
+}
+
+
+  .td > input[type=text],.td > input[type=number], select, input[type=email] {
+     width: 150px;
+     height: 40px;
+     border:2px solid #cacbcd;
+     padding-left: 10px;
+   }
+ 
+
+   .parent-success {
+    border: none;
+    width: 100%;
+    border-radius: 0px;
+    position: fixed;
+    top: 100; right: 0; bottom: 0; left: 0;
+  }
+  
+  .child-success {
+    background: #ebf5dd;
+    text-align: center;
+  }
+  
+  .parent-error {
+    border: none;
+    width: 100%;
+    border-radius: 0px;
+    position: fixed;
+    top: 100; right: 0; bottom: 0; left: 0;
+  }
+  .child-error {
+    background: rgb(255, 141, 141);
+    text-align: center;
+  }
+
+   .margin-container {
+    margin: 1px 60px 1px 20px !important;
+  }
+
+  .nav2 {
+    position: fixed;z-index: 10;width:75% !important;overflow-y: hidden
+  }
+  
+  
+
+
+  @media only screen and (max-width: 1100px) {
+   .td > input[type=text], select, input[type=email] {
+      width: 120px;
+      height: 30px;
+      border:2px solid #cacbcd;
+    }
+
+    .bt-size { min-width: 200px }
+
+    .margin-container {
+      margin: 1px 20px 1px 20px !important;
+    }
+
+    .nav2 {
+      position: fixed;z-index: 10;width:100% !important;overflow-y: hidden
+    }
+    
+  }
+
+  
+  @media only screen and (max-width: 770px) {
+    .td > input[type=text], select, input[type=email] {
+       width: 80px;
+       height: 30px;
+       border:2px solid #cacbcd;
+     }
+ 
+     .bt-size { min-width: 200px }
+ 
+     .margin-container {
+       margin: 1px 20px 1px 20px !important;
+     }
+
+     .nav2 {
+      position: fixed;z-index: 10;width:100% !important;overflow-y: hidden
+    }
+   }
+   .select-isd select{
+     width: 60px;
+     padding-left: 0;
+     margin-right: 10px;
+   }
+   .select-isd{
+    margin-right: 10px;
+   }
+   

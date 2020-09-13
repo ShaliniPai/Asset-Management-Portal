@@ -1,0 +1,76 @@
+<!-- *** -----------------------
+TABS: - CURRENT DATA  
+------------------------------------>
+<br>
+<h4 style="margin-bottom: 9px;">Charts</h4>
+<div style="position: relative;width: 100%;height: 100%;">
+    <div class="label-currentday" style="width: 142px;">
+        <p style="padding: 0;margin: 0;font-size: 16px;"
+            [ngClass]="tabInfo.type ==='present'?'tab-label-active':'tab-label-inactive'">Current Day</p>
+    </div>
+    <mat-tab-group class="tab-fontSize history-tabs" [selectedIndex]="currentTabGroupIndex"
+        (selectedTabChange)="onTabChanges('present',$event)" style="background-color: #f1f1f1;font-size: 16px;">
+        <mat-tab></mat-tab>
+        <mat-tab label="Utilization"></mat-tab>
+        <mat-tab label="No of Floors & Trips" [disabled]="onDisableTab()"></mat-tab> <br>
+        <mat-tab label="Energy"></mat-tab>
+    </mat-tab-group>
+</div>
+<!-- ...End current data tabs -->
+
+
+
+<!-- *** -----------------------
+TABS: - PAST DATA HISTROY 
+------------------------------------>
+<div style="position: relative;width: 100%;height: 100%;">
+    <div class="label-currentday" style="margin-top: -5px;">
+        <mat-form-field style="width: 150px;" appearance="outline">
+            <mat-select [(ngModel)]="windowTime" style="font-size: 16px;height: 5px;padding-top: 0px !important"
+                [disabled]="pastTabGroupIndex ===0" (selectionChange)="onChangeMetricWindow()"
+                [ngClass]="tabInfo.type ==='past'?'tab-label-active':'tab-label-inactive'">
+                <mat-option [value]="row.value" *ngFor="let row of listMetricWindow"> {{row.text}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <mat-tab-group style="background-color: #f1f1f1;" class="history-tabs tab-fontSize"
+        [selectedIndex]="pastTabGroupIndex" (selectedTabChange)="onTabChanges('past',$event)">
+        <!-- Note ** Default selection to set null : we have to use small css to hide the first tab -->
+        <mat-tab></mat-tab>
+
+        <mat-tab label="Utilization" style="display: none;"></mat-tab>
+        <mat-tab [disabled]="onDisableTab()" label="No of Floors & Trips" style="display: none;"></mat-tab>
+        <mat-tab label="Energy" style="display: none;"></mat-tab>
+        <mat-tab label="Peak Usage - Day" style="display: none;" [disabled]="onDisableTab()"> </mat-tab>
+        <mat-tab label="Peak Usage - Hour" style="display: none;" [disabled]="onDisableTab()"></mat-tab>
+    </mat-tab-group>
+</div>
+<!-- .... End past data tabs -->
+
+<div class="chart-container" id="id_ConvertImage">
+    <div>
+        <kendo-pdf-export #pdf paperSize="auto" margin="2cm">
+            <h6 style="margin-bottom: 0;font-weight: 500;font-size:13px;padding-top: 8px;">
+                &nbsp;&nbsp;{{selectedWidget.assetName}} -
+                {{tabName}}
+            </h6>
+            <div>
+                <router-outlet></router-outlet>
+            </div>
+
+            <div style="position: absolute;bottom: 5px;padding-left: 5px;width: 100%;padding-right: 25px;"
+                class="layout-row">
+                <span>Asset timezone : <b>(GMT +5:30) Bombay, Calcutta, Madras, New Delhi </b></span>
+                <span class="flex"></span>
+                <!--     <span class="flex">Asset timezone : <b>{{selectedWidget.timezone}} {{timezoneName}}(GMT +5:30) Bombay, Calcutta, Madras, New Delhi  </b></span> -->
+                <span style="white-space: nowrap;">Asset operating hours : <b> 12am to 12am</b></span>
+            </div>
+        </kendo-pdf-export>
+    </div>
+</div>
+<div style="text-align: right;margin-top: 15px;">
+    <!-- *ngIf="bUsedBypage=='MetricReview'" -->
+    <span style="color:black;border:none;font-weight: 400;">Download</span>&nbsp;&nbsp;
+    <button (click)="pdf.saveAs(onReturnPDFTitle())" class="btn-chart-download">PDF</button>
+    &nbsp;<button (click)="onClick_saveAsImage()" class="btn-chart-download">JPEG</button>
+</div>

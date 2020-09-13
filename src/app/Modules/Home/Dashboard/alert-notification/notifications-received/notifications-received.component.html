@@ -1,0 +1,58 @@
+<div style="padding-left: 20px;width: 97%;">
+    <h5 style="padding-left:15px;padding-top: 15px;font-family: boschsansmed;font-weight: 400;font-size: 20px;">Notifications Received <em class="fa fa-bell-o" style="color:#a3d446"></em></h5>
+    <div style="padding:0 0 0 10px;" class="notify-body">
+        <div class="css-alert-box" style="margin-top: -15px;">
+            <table mat-table [dataSource]="bNotificationData" style="width:100%;background-color: white">
+                <ng-container matColumnDef="userId">
+                    <th mat-header-cell *matHeaderCellDef class="header-style" scope="col">S.No</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="header-line-child">
+                        {{ i+1 }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="updatedAt">
+                    <th mat-header-cell *matHeaderCellDef class="header-style" scope="col">Time Stamp</th>
+                    <td mat-cell *matCellDef="let row" class="header-line-child">{{row.createdAt? row.createdAt :''}}<td>
+                </ng-container>
+
+                <ng-container matColumnDef="asset">
+                    <th mat-header-cell *matHeaderCellDef class="header-style" scope="col">Asset</th>
+                    <td mat-cell *matCellDef="let row" class="header-line-child">{{row.asset? row.asset :''}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="description">
+                    <th mat-header-cell *matHeaderCellDef class="header-style" scope="col">Description</th>
+                    <td mat-cell *matCellDef="let row" class="header-line-child">{{row.criteria? row.criteria :''}} {{row.time? row.time : ''}} <p style="display: inline;" *ngIf="row.criteria !== 'Utilization less than' && row.criteria !== 'ENERGY per day greater than'">mins</p> <p style="display: inline;" *ngIf="row.criteria === 'ENERGY per day greater than'">kWhr</p> <p style="display: inline;" *ngIf="row.criteria === 'Utilization less than'">%</p></td>
+                </ng-container>
+
+                <ng-container matColumnDef="medium">
+                    <th mat-header-cell *matHeaderCellDef class="header-style" scope="col">Medium</th>
+                    <td mat-cell *matCellDef="let row" class="header-line-child">{{row.medium ? row.medium :''}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="esclvl">
+                    <th mat-header-cell *matHeaderCellDef class="header-style" scope="col">Esc Level</th>
+                    <td mat-cell *matCellDef="let row" class="header-line-child">{{row.escLevel? row.escLevel :''}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="createdBy">
+                    <th mat-header-cell *matHeaderCellDef class="header-style" scope="col">Events Created By</th>
+                    <td mat-cell *matCellDef="let row" class="header-line-child">{{row.userInfo[0].firstName ? row.userInfo[0].firstName : ''}} {{ row.userInfo[0].lastName ? row.userInfo[0].lastName : '' }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="mute">
+                    <th mat-header-cell *matHeaderCellDef class="header-style" scope="col">Mute</th>
+                    <td mat-cell *matCellDef="let row" class="header-line-child">
+                        <div>
+                            <button class="rb-btn rb-border-color" [disabled]="row.muteStatus === true" [style.opacity]="row.muteStatus === true ? 0.2:1" (click)="muteNotifications(row.alertObjId)" value={{row._id}} type="submit">Mute</button>
+                        </div>
+                    </td>
+                </ng-container>
+
+                
+                <tr mat-header-row *matHeaderRowDef="otblColumns;sticky:true"></tr>
+                <tr mat-row *matRowDef="let row;columns:otblColumns"></tr>
+            </table>
+        </div>
+    </div>
+</div>

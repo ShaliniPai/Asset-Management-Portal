@@ -1,0 +1,5 @@
+<div *ngIf="snackbarData">
+  <img *ngIf="(snackbarData.status|lowercase)=='success'" class="snack-img" src="../../../../assets/Images/Icons/bosch-ic-alert-success.svg">
+  <img class="snack-img" *ngIf="(snackbarData.status|lowercase) =='error'" src="../../../../assets/Images/Icons/bosch-ic-alert-error.svg">
+  {{snackbarData.message}} <button mat-button (click)="onSnackDismiss()" *ngIf="snackbarData.action"> {{snackbarData.action}}</button>
+</div>

@@ -1,0 +1,45 @@
+ul{
+    list-style-type: none;
+    line-height: 24px;
+    padding-left: 19px
+}
+.radio-label{
+font-weight: 400;
+font-family: roboto;
+}
+ 
+
+
+:host deep {
+    .treeview-header {
+      .row-filter {
+        margin-bottom: .5rem;
+      }
+      .row-all {
+        .fa {
+          cursor: pointer;
+        }
+      }
+    }
+    .treeview-container {
+      .row-item {
+        margin-bottom: .3rem;
+        flex-wrap: nowrap;
+        .fa {
+          width: .8rem;
+          cursor: pointer;
+          margin-right: .3rem;
+        }
+      }
+    }
+  }
+  
+  .treeview-container {
+    overflow-y: auto;
+    padding-right: 1.3rem;
+  }
+  
+  .treeview-text {
+    padding: .3rem 0;
+    white-space: nowrap;
+  }

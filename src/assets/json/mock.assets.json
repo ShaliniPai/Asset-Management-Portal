@@ -1,0 +1,35 @@
+[
+    {
+        "tenantId": "10002552",
+        "customer": "BBMP",
+        "zone": "East Zone",
+        "group": "ABC Group",
+        "location": "Kormangla",
+        "wing": "A wing",
+        "assetID": "1000500",
+        "assetName": "MCU BBMP 1",
+        "devId": "99999045"
+    },
+    {
+        "tenantId": "10002552",
+        "customer": "BBMP",
+        "zone": "East Zone",
+        "group": "ABC Group",
+        "location": "Kormangla",
+        "wing": "A wing",
+        "assetID": "1000503",
+        "assetName": "MCU BBMP 2",
+        "devId": "99999031"
+    },
+    {
+        "tenantId": "10002552",
+        "customer": "SSUM",
+        "zone": "WEST Zone",
+        "group": "ABC Group",
+        "location": "Eelectronic City",
+        "wing": "C wing",
+        "assetID": "1000501",
+        "assetName": "SSUP KOL 2",
+        "devId": "99999032"
+    }
+]

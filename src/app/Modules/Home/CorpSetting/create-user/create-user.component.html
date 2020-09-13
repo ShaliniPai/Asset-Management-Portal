@@ -1,0 +1,147 @@
+<br>
+<div style="margin: 1px 25px" class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <button routerLink="/home/corp/user" class="rb-btn bt bt-d">Return to: Existing Users</button>
+
+            <button routerLink="/home/corp/user/UserPrevilegesMappingComponent" class="rb-btn bt bt-d pull-right">Map User
+                Privileges</button>
+        </div>
+    </div>
+</div>
+<hr *ngIf="_ModuleType !== 'onBoarding'" />
+<div *ngIf="_ModuleType !== 'onBoarding'" style="margin: 1px 20px" class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <span class="title">&nbsp;Add New Users - {{userEntity}}</span>
+
+        </div>
+    </div>
+</div>
+<br *ngIf="_ModuleType !== 'onBoarding'">
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+<div class="container-fluid margin-container">
+    <div class="row">
+        <div class="col-lg-12 table-type">
+         
+            <!-- User List -->
+            <table style="min-width: 100%">
+                <thead>
+                    <tr>
+                        <th class="th" style="padding: 20px 0px 20px 10px;">S.No </th>
+                        <th class="th">Last Name *</th>
+                        <th class="th">First Name *</th>
+                        <th class="th">User Type *
+                            <span *ngIf="_ModuleType !== 'onBoarding'">
+                            </span>
+                            <span *ngIf="_ModuleType === 'onBoarding'"><img
+                                    src="../../../assets/images/help_ico.png" /></span></th>
+                        <th class="th">User ID * <span *ngIf="_ModuleType === 'onBoarding'"><img
+                                    src="../../../assets/images/help_ico.png" /></span></th>
+                        <th class="th">Email ID<span *ngIf="_ModuleType === 'onBoarding'">
+                                <img src="../../../assets/images/help_ico.png" /></span></th>
+                        <th class="th">Cell Phone No. * <span *ngIf="_ModuleType === 'onBoarding'"><img
+                                    src="../../../assets/images/help_ico.png" /><br></span>
+                            <!--<span class="mini-header"
+                  *ngIf="_ModuleType === 'onBoarding'">Optional</span>-->
+                        </th>
+                        <th class="th"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="td" style="padding: 2% 1%;">1</td>
+                        <td class="td"><input type="text" maxlength="50" formControlName="u1_lastName" required></td>
+                        <td class="td"><input type="text" maxlength="50" formControlName="u1_firstName" required></td>
+                        <td class="td">
+                            <select formControlName="u1_userType" required>
+                                <option disabled value="">Select user type</option>
+                                <option value="superAdmin" *ngIf="userLevel=='tenant'">Super Admin</option>
+                                <option value="standard">Standard</option>
+                                <option value="administrator" *ngIf="userLevel!='tenant'">Administrator</option>
+                            </select>
+                        </td>
+                        <td class="td"><input type="text" maxlength="50" formControlName="u1_userId" required></td>
+                        <td class="td"><input type="email" maxlength="50"
+                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" formControlName="u1_email"></td>
+                        <td class="td select-isd">+
+                            <select id="select-isd" formControlName="u1_isdCode" required>
+                                <option [value]="+91">(91) India</option>
+                                <optgroup label="Other country codes">
+                                    <option *ngFor="let isd of isdCodes" [value]="isd.calling_code">
+                                        ({{isd.calling_code}})
+                                        {{isd.country}}</option>
+                                </optgroup>
+                            </select>
+                            <input type="text" maxlength="12" appAllowholenumebrs formControlName="u1_phone" required numbersOnly>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td" style="padding: 2% 1%;">2</td>
+                        <td class="td"><input type="text" maxlength="50" formControlName="u2_lastName"></td>
+                        <td class="td"><input type="text" maxlength="50" formControlName="u2_firstName"></td>
+                        <td class="td">
+                            <select formControlName="u2_userType">
+                                <option disabled value="">Select user type</option>
+                                <option value="superAdmin" *ngIf="userLevel=='tenant'">Super Admin</option>
+                                <option value="standard">Standard</option>
+                                <option value="administrator" *ngIf="userLevel!='tenant'">Administrator</option>
+                            </select>
+                        </td>
+                        <td class="td"><input type="text" maxlength="50" formControlName="u2_userId"></td>
+                        <td class="td"><input type="email" maxlength="50"
+                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" formControlName="u2_email"></td>
+                        <td class="td select-isd">+
+                            <select id="select-isd" formControlName="u2_isdCode">
+                                <option [value]="+91">(+91) India</option>
+                                <optgroup label="Other country codes">
+                                    <option *ngFor="let isd of isdCodes" [value]="isd.calling_code">
+                                        ({{isd.calling_code}})
+                                        {{isd.country}}</option>
+                                </optgroup>
+                            </select>
+                            <input type="text" maxlength="12" appAllowholenumebrs formControlName="u2_phone">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td" style="padding: 2% 1%;">3</td>
+                        <td class="td"><input type="text" maxlength="50" formControlName="u3_lastName"></td>
+                        <td class="td"><input type="text" maxlength="50" formControlName="u3_firstName"></td>
+                        <td class="td">
+                            <select formControlName="u3_userType">
+                                <option disabled value="">Select user type</option>
+                                <option value="superAdmin" *ngIf="userLevel=='tenant'">Super Admin</option>
+                                <option value="standard">Standard</option>
+                                <option value="administrator" *ngIf="userLevel!='tenant'">Administrator</option>
+                            </select>
+                        </td>
+                        <td class="td"><input type="text" maxlength="50" formControlName="u3_userId"></td>
+                        <td class="td"><input type="email" maxlength="50"
+                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" formControlName="u3_email"></td>
+                        <td class="td select-isd">+
+                            <select id="select-isd" formControlName="u3_isdCode">
+                                <option [value]="+91">(+91) India</option>
+                                <optgroup label="Other country codes">
+                                    <option *ngFor="let isd of isdCodes" [value]="isd.calling_code">
+                                        ({{isd.calling_code}})
+                                        {{isd.country}}</option>
+                                </optgroup>
+                            </select>
+                            <input type="text" maxlength="12" appAllowholenumebrs formControlName="u3_phone">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-12 margin-container">
+            <br><br>
+            <button style="margin-right: -20px" class="rb-btn rb-primary bt pull-right" [disabled]="">Submit</button>
+        </div>
+    
+
+
+
+    </div>
+</div>
+</form>
+<br><br><br><br>

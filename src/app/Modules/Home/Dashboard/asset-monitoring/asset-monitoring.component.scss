@@ -1,0 +1,36 @@
+// ::ng-deep .prevent-cssLeak-rtm .mat-list-base .mat-list-item .mat-list-item-content,
+// .mat-list-base .mat-list-option .mat-list-item-content {
+//   padding: 0 6px !important;
+//   height: 55px;
+//   justify-content: flex-start;
+//   align-items: start;
+// }
+
+// .prevent-cssLeak-rtm .mat-list-base .mat-list-item.mat-2-line,
+// .prevent-cssLeak-rtm .mat-list-base .mat-list-option.mat-2-line {
+//   height: 55px;
+// }
+// ::ng-deep .prevent-cssLeak-rtm .mat-grid-tile .mat-figure {
+//   justify-content: flex-start !important;
+//   align-items: start !important;
+// }
+// .realtime-time-align {
+//   position: absolute;
+//   text-align: right;
+//   width: 100%;
+//   padding: 20px 33px 0px 0;
+//   color: #525f6b !important;
+//   z-index: 20;
+//   right: 31px;
+// }
+
+.metricWindow-second-padding > td {
+  padding-top: 35px;
+}
+
+.pagination-align {
+  position: absolute;
+  bottom: 0;
+  right: 65px;
+  background: transparent;
+}

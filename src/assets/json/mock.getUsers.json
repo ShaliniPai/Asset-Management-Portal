@@ -1,0 +1,23 @@
+[{
+    "_id":"5e32969d12c6fd2a040a771c",
+    "email":"",
+    "firstName":"Chethan",
+    "lastName":"Krishna",
+    "unique_key":"cmu6kor",
+    "phone":919448077304,
+    "sysRole":"SystemAdmin",
+    "password":"$2b$10$oxl.dDuCmnEwJSgOXqmiPuZaHCqsHfdHtGFcVgNQflqJ2icWYac6S",
+    "resetPassword":false,
+    "enabled":true,
+    "uename":"BBMP Entity",
+    "createdBy":"chethan.cmk@gmail.com",
+    "updatedBy":"chethan.cmk1@gmail.com",
+    "createdAt":"2020-01-30T08:41:01.030Z",
+    "updatedAt":"2020-02-24T11:17:48.508Z",
+    "userRole":["FullAccess"],
+    "userActive":0,
+    "eula":{"accepted":true,"eulaTs":"2020-01-30T08:41:01.030Z"},
+    "tenantId":"00000101",
+    "userEntity":"UE1"
+  }
+]

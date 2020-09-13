@@ -1,0 +1,103 @@
+.sidenav-container {
+  height: 100%;
+  background-color: white;
+}
+
+.sidenav {
+  width: 350px;
+  background-color: #fafafa;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.sidenavToogle-btn-align {
+  position: absolute;
+  display: inline-flex;
+  flex-direction: column;
+  line-height: 0;
+  height: 100%;
+  justify-content: center;
+  right: 0;
+  top: 0;
+  width: 50px;
+  background-color: #fafafa;
+  // margin-top: -56px;
+}
+
+.sidenavToogle-btn-align .toogle-btn-title {
+  transform: rotate(90deg);
+  margin-top: -60px;
+  margin-left: 19px;
+  white-space: nowrap;
+}
+
+.sidenavToogle-btn-align button {
+  transform: rotate(90deg);
+  white-space: nowrap;
+  line-height: 1.1;
+  flex-direction: inherit;
+  margin-top: -56px;
+  margin-left: -6px;
+}
+
+.sidenavToogle-btn-align:hover {
+  color: #005691 !important;
+}
+
+.side-windowTime-btn {
+  display: inline-flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 50px;
+  align-items: center;
+  margin-left: -10px;
+  background-color: #fafafa;
+  border-left: 5px solid white;
+  /* padding-left: 44px; */
+  margin-left: 1px;
+}
+
+.side-windowTime-btn > button {
+  transform: rotate(90deg);
+  white-space: nowrap;
+  line-height: 1.1;
+}
+
+.sidenav-toggle-btn {
+  border-left: 1px solid #dcdcdc;
+  min-width: 0px;
+  max-width: 1px;
+  min-height: 87px;
+  margin-right: -4px;
+  background: #fafafa;
+  border-radius: 12px 4px 0px 12px;
+  padding: 0px 15px 0px 9px;
+}
+.sidenav-toggle-btn .fa {
+  font-size: 22px;
+  color: #777;
+  margin-left: -2px;
+}
+
+
+/*
+Reduce the size of radio buttons
+*/
+::ng-deep .mat-radio-outer-circle {
+  height: 17px !important;
+  width: 17px !important;
+}
+::ng-deep .mat-radio-inner-circle {
+  height: 17px !important;
+  width: 17px !important;
+}
+
+/// End.. radio reduce

@@ -1,0 +1,140 @@
+<div class="full-wh" style="display: flex;flex-direction: column;">
+
+    <div class="toolbar-fixed">
+        <mat-toolbar style="background-color: white;min-height: 97px; max-height: 97px;">
+            <img src="../../../../assets/Images/Images/topstrip.jpg" class="topStrip-img">
+            <mat-toolbar-row>
+                <!-- <h3 class="logo-title"> <span class="title">PHANTOM </span><br>
+                    <span class="sub-title">Connected Elevator</span>
+                </h3> -->
+
+                <img src="../../../../assets/Images/Images/Phantom_ConnectedElevator.png" style="height: inherit; width: initial;">
+        
+                
+                <span class="flex"></span>
+                <div>
+                    <div class="tenant-title" style="text-align: center;">{{userEntityName}}</div>
+                    <div style="margin-bottom: 60px;"></div>
+                    <!-- <span class="ver-line"></span> -->
+                    <button mat-icon-button><img src="../../../../assets/Images/Icons/notification_ic.png"
+                            style="font-size: 10px">
+                    </button>
+                    <span class="ver-line"></span>
+                    <button mat-icon-button style="margin-bottom: 0" [matMenuTriggerFor]="MMenuUserSetting"><img
+                            src="../../../../assets/Images/Icons/user_ic.png">
+                    </button> <span class="ver-line"></span>
+                    <button mat-icon-button style="margin-bottom: 0" [matMenuTriggerFor]="MMenuCorSetting"><img
+                            src="../../../../assets/Images/Icons/settings_ic.png">
+                    </button> <span class="ver-line"></span>
+                    <button mat-icon-button style="margin-bottom: 0" [matMenuTriggerFor]="MMenuHelp"><img
+                            src="../../../../assets/Images/Icons/help_ic.png">
+                    </button>
+                </div>
+            </mat-toolbar-row>
+        </mat-toolbar>
+
+
+
+        <!-- Navigation Bar : Dashboard -->
+        <div class="nav-div custom-styles">
+            <mat-divider></mat-divider>
+            <nav mat-tab-nav-bar style="padding-left: 15px;">
+                <!-- <a mat-tab-link [routerLink]="'dashboard'" [routerLinkActive] #tab="routerLinkActive"
+                    [active]="tab.isActive">Dashboard </a> -->
+                <!-- *** Params are checkbox/radio, which deside the treeview type -->
+                <a mat-tab-link [routerLink]="['suite/assetMonitoring/','checkbox']" [routerLinkActive]
+                    #tab1="routerLinkActive" [active]="tab1.isActive || isEnabledMonDetails"
+                    style="text-decoration: none;"
+                    *ngIf="$auth.$grantAccess('A') ||$auth.$grantAccess('G') ||$auth.$grantAccess('S') ">Asset
+                    Monitoring</a>
+                <a mat-tab-link [routerLink]="'alertsAndNotification'" [routerLinkActive] #tab2="routerLinkActive"
+                    [active]="tab2.isActive" style="text-decoration: none;">Alerts & Notifications</a>
+            </nav>
+
+            <!-- Navigation Bar : CorporateSettings -->
+            <nav mat-tab-nav-bar *ngIf="isCorEnabled" style="background-color: #f1f1f1;padding-left: 15px;">
+                <a mat-tab-link [routerLink]="'corp/user'" [routerLinkActive] #tabUser="routerLinkActive"
+                    [active]="tabUser.isActive">Users </a>
+                <a mat-tab-link [routerLink]="'corp/sites'" [routerLinkActive] #tabSites="routerLinkActive"
+                    [active]="tabSites.isActive" *ngIf="$auth.$grantAccess('A')">Sites</a>
+                <a mat-tab-link [routerLink]="'corp/asset'" [routerLinkActive] #tabAsset="routerLinkActive"
+                    [active]="tabAsset.isActive" *ngIf="$auth.$grantAccess('A')">Assets</a>
+                <a mat-tab-link></a>
+            </nav>
+
+            <!-- Navigation Bar : User Settings -->
+            <nav mat-tab-nav-bar *ngIf="isUserEnabled" style="background-color: #f1f1f1;padding-left: 15px;">
+                <a mat-tab-link [routerLink]="'user/profile'" [routerLinkActive] #tabUser="routerLinkActive"
+                    [active]="tabUser.isActive">User Profile</a>
+            </nav>
+        </div>
+    </div>
+    <!--------------------------------------------------- 
+        Spinner Default Spinner -->
+    <div *ngIf="isEnableSpinner" style="transition: all 0.9sec ease-out;">
+        <div class="spinner-container">
+            <div style="margin-top:-200px">
+                <rb-loading-spinner></rb-loading-spinner>
+            </div>
+        </div>
+    </div>
+    <!--------------------------------------------------- 
+        Content Body -->
+
+    <div class="full-wh" style="overflow: auto;display: block;flex:auto"
+        [style.margin-top]="isCorEnabled ? '190px':'145px'">
+        <div class="full-wh">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+
+
+</div>
+
+<!--------------------------------------
+    Menu Conofig
+    Menu For User settings
+--------------------------------------->
+<mat-menu #MMenuUserSetting="matMenu" yPosition="above">
+    <button mat-menu-item (click)="openDialog()">Change Password</button>
+    <button mat-menu-item (click)="onLogout()">Sign Out</button>
+</mat-menu>
+
+
+<!--------------------------------------
+    Menu Conofig
+    Menu For Corporate settings
+--------------------------------------->
+<mat-menu #MMenuCorSetting="matMenu" yPosition="above">
+    <button mat-menu-item [routerLink]="'corp/user'" *ngIf="$auth.$grantAccess('A') || $auth.$grantAccess('G')">Corporate Settings</button>
+    <button mat-menu-item [routerLink]="'user/profile'">User Settings</button>
+</mat-menu>
+
+
+<!--------------------------------------
+  Menu Conofig
+  Menu for Help and Preferences
+--------------------------------------->
+<mat-menu #MMenuHelp="matMenu">
+    <button mat-menu-item>Preferences</button>
+    <button mat-menu-item>Help</button>
+    <button mat-menu-item>About</button>
+</mat-menu>
+
+<div id="as" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Change Password</h4>
+            </div>
+            <div class="modal-body">
+                Hi
+            </div>
+
+        </div>
+
+    </div>
+</div>

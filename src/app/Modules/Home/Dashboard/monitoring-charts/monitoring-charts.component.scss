@@ -1,0 +1,77 @@
+$defaultColor: #005691 !important;
+
+::ng-deep .mat-ink-bar {
+  background-color: $defaultColor;
+  height: 25px;
+}
+
+::ng-deep .mat-tab-label {
+  opacity: 1 !important;
+  min-width: auto;
+  padding: 0 5px !important;
+  margin: 0 0px -2px 15px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  color: black;
+  font-weight: 400;
+}
+
+::ng-deep .mat-tab-label-active {
+  color: #005691 !important;
+  //font-weight: 500;
+  // font-family: Boschsansmed;
+}
+
+.label-currentday {
+  position: absolute;
+  right: 35px;
+  /* top: 4px; */
+  margin-top: 12px;
+  z-index: 10;
+  font-weight: 400;
+  color: $defaultColor;
+}
+
+::ng-deep .tab-fontSize .mat-tab-label {
+  font-size: 16px !important;
+}
+
+::ng-deep .label-currentday .mat-form-field-infix {
+  padding-top: 9px !important;
+}
+
+/* Hide the first tab in Mat-tabs*/
+::ng-deep .history-tabs .mat-tab-labels > .mat-tab-label:first-child {
+  display: none;
+}
+
+.tab-label-active {
+  font-weight: 500;
+  color: $defaultColor;
+}
+.tab-label-inactive {
+  //color: #535353;
+  font-weight: 400;
+  opacity: 0.4;
+}
+
+::ng-deep .mat-select-value-text {
+  color: $defaultColor;
+}
+
+.btn-chart-download {
+  border: 2px solid #005691;
+  color: #005691;
+  background: transparent;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.chart-container {
+  padding: 10px;
+  border: 1px solid #d8d8d8;
+  margin-top: -1px;
+  background-color: white;
+  height: 380px;
+  position: relative;
+}

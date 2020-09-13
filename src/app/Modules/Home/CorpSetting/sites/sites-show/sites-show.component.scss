@@ -1,0 +1,17 @@
+.site-table-border {
+    max-height: 500px;
+    overflow: auto;
+    border: 1px solid #e0e0e0;
+}
+
+.header-style {
+    color: black;
+    font-size: 12px;
+    z-index: 1;
+    font-family: boschsansbold !important;
+    border-bottom: 1px solid #cacbcd;
+}
+
+::ng-deep mat-header-row {
+    z-index: 1 !important;
+}

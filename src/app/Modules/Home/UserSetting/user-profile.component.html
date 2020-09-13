@@ -1,0 +1,123 @@
+<div class="user0 checking" style="height: 100%;padding-top:5%">
+    <div class=" usertimezonecontainer">
+        <div style=" width: 100%;position: relative; height: 100%;">
+            <div class="row">
+                <div class="col-lg-12" style="margin:30px 0 10px 20px">
+                    <strong><span class="title">User Profile </span></strong>
+                </div>
+            </div>
+            <br>
+            <div class="container-fluid margin-container">
+                <!-- main container -->
+                <form class="userprofileform" *ngIf="userProfile">
+                    <div class="form-group row">
+                        <label for="inputUniqueKey" class="col-sm-2 col-form-label cu-lable">User ID:</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control cu-input" id="inputUniqueKey" disabled
+                                placeholder="User ID" name="userId" [(ngModel)]="userProfile.unique_key">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputUserType" class="col-sm-2 col-form-label cu-lable">User Type:</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control cu-input" id="inputUserType" disabled
+                                placeholder="User Type" name="userRole" [(ngModel)]="userProfile.userRole">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputEntityName" class="col-sm-2 col-form-label cu-lable">First Name:</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control cu-input" id="inputEntityName"
+                                placeholder="First Name" name="firstName" [(ngModel)]="userProfile.firstName">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputlastName" class="col-sm-2 col-form-label cu-lable">Last Name:</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control cu-input" id="inputlastName" placeholder="Last name"
+                                name="lastName" [(ngModel)]="userProfile.lastName">
+                        </div>
+                    </div>
+                    
+
+                    <div class="form-group row">
+                        <label for="inputEmailId" class="col-sm-2 col-form-label cu-lable">Email ID:</label>
+                        <div class="col-sm-4">
+                            <input type="email" class="form-control cu-input" id="inputEmailId"
+                                placeholder="xxx@xxxxx.xxx" name="email" [(ngModel)]="userProfile.email">
+                        </div>
+                        <div *ngIf="!(userProfile.emailVerify) && !enterEmailOtp && currentEmail !== ''" class="verify-btn-div">
+                            <div class="verify-button" (click)="showEmailOtp()">
+                                <input value="Verify">
+                            </div>
+                        </div>
+                        <div *ngIf="userProfile.emailVerify && currentEmail !== ''" class="verify-btn-div">
+                            <div class="verified-button" disabled>
+                                <input value="Verified">
+                            </div>
+                        </div>
+                        <div class="verify-btn-div">
+                            <div class="verified-button" *ngIf="enterEmailOtp && !(userProfile.emailVerify)">
+                                <input value="Enter OTP:" style="display: inline-flex;">
+                                <input type="text" class="form-control cu-input" style="display: inline-flex;border: 1px solid #ccc" name="emailOtpInput" [(ngModel)]="emailOtpInput">
+                                <img alt="save" (click)="verifyEmail(emailOtpInput)" class="ico ico2 i" src="../../../../assets/Images/Icons/bosch-ic-save.svg">
+                                <img alt="undo" (click)="undoEmailVerify()" class="ico ico2 i" src="../../../../assets/Images/Icons/bosch-ic-undo.svg">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPhoneNo" class="col-sm-2 col-form-label cu-lable">Phone Number:*</label>
+                        <div class="col-sm-4">
+                            <select name="countryCode" [(ngModel)]="userProfile.countryCode" style="width:23%; height: 39px; padding: 10px 12px; font-size: 14px; line-height: 1.42857143; border: 1px solid #ccc; border-radius: 4px; margin-right: 5px; background-color: #fff!important;">
+                                <option *ngFor="let code of countryCodes" [value]="'+'+ code">+{{ code }}</option>
+                            </select>
+                            <input type="text" style="width: 258px;display: inline!important;" class="form-control cu-input"  id="inputPhoneNo" maxlength="14" [(ngModel)]="splicedPhoneNumber"
+                                placeholder="xxxxxxxxxx" name="phone" required pattern="([+]?\d{1,2}[.-\s]?)?(\d{3}[.-]?){2}\d{4}">
+                        </div>
+                        <div *ngIf="!(userProfile.phoneVerify) && !enterPhoneOtp" class="verify-btn-div">
+                            <div class="verify-button" (click)="showPhoneOtp()">
+                                <input value="Verify">
+                            </div>
+                        </div>
+                        <div class="verify-btn-div">
+                            <div class="verified-button">
+                                <input *ngIf="userProfile.phoneVerify" value="Verified">
+                            </div>
+                        </div>
+                        <div class="verify-btn-div">
+                            <div *ngIf="enterPhoneOtp" class="verified-button">
+                                <input value="Enter OTP:" style="display: inline-flex;">
+                                <input type="text" class="form-control cu-input" style="display: inline-flex;border: 1px solid #ccc" name="phoneOtpInput" [(ngModel)]="phoneOtpInput">
+                                <img alt="save" (click)="verifyPhone(phoneOtpInput)" class="ico ico2 i" src="../../../../assets/Images/Icons/bosch-ic-save.svg">
+                                <img alt="undo" (click)="undoPhoneVerify()" class="ico ico2 i" src="../../../../assets/Images/Icons/bosch-ic-undo.svg">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label cu-lable">Time Zone:</label>
+                        <div class="col-md-8 col-xs-7">
+                            <div *ngIf="!isEdit"><span *ngFor="let timezone of timezones"><span style="font-size: 16px" *ngIf="timezone.value === userProfile.timezone" class="">{{timezone.text}}</span></span><img alt="edit" (click)="isEdit=true" class="trash i ico" src="../../../../assets/Images/Icons/bosch-ic-edit.svg">
+                            </div>
+                            <div *ngIf="isEdit">
+                                <select name="inputtimezone" class="col-md-8 col-xs-6" style="height: 40px;width: 400px;" [(ngModel)]="userProfile.timezone">
+                                    <option *ngFor="let timezone of timezones" [value]="timezone.value">{{timezone.text}}</option>
+                                </select>
+                                <!-- <img alt="undo" class="ico ico2 i" (click)="isEdit=false" src="../../../../assets/Images/Icons/bosch-ic-undo.svg">
+                                <img alt="save" class="ico ico2 i" src="../../../../assets/Images/Icons/bosch-ic-save.svg"> -->
+                            </div>
+                        </div>
+                    </div>
+               
+                    <div class="submit-btn-div">
+                        <div style=" display: flex; justify-content: center; margin-right: 100px; margin-top:2px;">
+                            <div class="submit-button">
+                                <input value="Submit" type="Submit" (click)="updateUserProfile()">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

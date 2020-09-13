@@ -1,0 +1,124 @@
+<!-- <app-asset-monitoring></app-asset-monitoring> -->
+
+<div class="default-padding" style="overflow: auto;" *ngIf="row">
+    <!-- ** Back Button And Last Updated time -->
+    <div class="layout-row" style="justify-content: flex-end;margin: 0 5px 5px 0;;">
+
+        <div class="flex">
+            <button mat-button (click)="onBack()" style="font-weight: 400;padding-left: 0;"><img
+                    src="../../../../../assets/Images/Icons/back_btn.png" style="height: 24px;">&nbsp;&nbsp;
+                Back</button>
+        </div>
+        <div>
+            <div style="color: #525f6b"> <img src="../../../../../assets/Images/Icons/clock.svg" class="clock-img">
+                &nbsp;&nbsp;Last Updated
+                :&nbsp;{{oLastReportUpdatedOn | date:'hh:mm a'}} </div>
+        </div>
+    </div>
+    <!-- ...End -->
+
+
+    <mat-grid-list [cols]="breakpoint" [rowHeight]="'160px'" gutterSize="10px">
+        <mat-grid-tile [colspan]="2" style="border:1px solid #eee;min-width: 704px;">
+
+            <!-- **---------------- Header (Asset Name & Status) ------------------------->
+            <mat-grid-tile-header [ngClass]="'header-'+(row.status|lowercase)" style="cursor: pointer;">
+                <div class="layout-row" style="width: 100%;">
+                    <span style="font-size: 18px">{{row.assetName}}</span>
+                    <span class="flex"></span>
+                    <span
+                        style="font-weight: 500;font-size: 16px;text-transform: capitalize">{{((row.status| lowercase) ==='selected')?'':row.status}}</span>
+                </div>
+            </mat-grid-tile-header>
+
+            <!-- ** --------------------------------
+                            Current TIME REPORT 
+                        ---------------------------------------------->
+            <div style="display: flex;flex-direction: row;padding-top:48px;width: 100%;" class="viewPortWidth">
+                <div>
+                    <h4 class="window-label">Current Day</h4>
+                    <div style="width: 450px;" class="report-Fonts">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td> {{row.floors}} <br> <span>Floors</span> </td>
+                                    <td>{{row.trips}} <br> <span>Trips</span></td>
+                                    <td> {{row.util}}%<br> <span>Utilization</span></td>
+                                    <td [style.font-size]="onFontSize(row.downtime)" style="padding-left: 2px;">
+                                        {{row.downtime}}<br>
+                                        <span>Downtime(mins)</span>
+                                    </td>
+                                    <td style="border-right: none;" [style.font-size]="onFontSize(row.energy)">
+                                        {{row.energy}}
+                                        <br> <span>Energy (kWh)</span> </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <mat-divider style="border-color: red;"></mat-divider>
+                <div style="border-left: 1px solid #ebebeb;" class="flex">
+                    <div class="layout-row" *ngIf="windowList">
+                        <h4 class="window-label flex"> {{windowList.text}}</h4>
+                        <button mat-icon-button (click)="onSpanRow(rowSpan)">
+                            <mat-icon style="opacity: 0.7;">{{!rowSpan?'add_circle':'remove_circle'}}</mat-icon>
+                        </button>
+                    </div>
+                    <!-- ... End current time report -->
+
+                    <!-- ** --------------------------------
+                            WINDOE TIME BASED REPORT 
+                        ---------------------------------------------->
+                    <div class="report-Fonts" style="width: 100%;">
+                        <table class="table">
+
+                            <tr>
+                                <td [style.font-size]="onFontSize(row.metricWindow.floorsDay)" [style.width]="rowSpan ? '10%':'20%'">
+                                    {{row.metricWindow.floors}} <br><span>Floors</span>
+                                </td>
+                                <td [style.font-size]="onFontSize(row.trips)" [style.width]="rowSpan ? '10%':'20%'">
+                                    {{row.metricWindow.trips}} <br> <span>Trips</span></td>
+                                <td [style.width]="rowSpan ? '10%':'20%'"> {{row.metricWindow.util}}%<br>
+                                    <span>Utilization</span></td>
+                                <td [style.font-size]="onFontSize(row.metricWindow.downtime)" [style.width]="rowSpan ? '10%':'20%'">
+                                    {{row.metricWindow.downtime}}<br>
+                                    <span>Downtime(mins)</span></td>
+                                <td [style.font-size]="onFontSize(row.energy)" [style.width]="rowSpan ? '10%':'20%'">
+                                    {{row.metricWindow.energy}}<br> <span>Energy (kWh)</span> </td>
+
+                                <td *ngIf="rowSpan" [style.width]="rowSpan ? '10%':'20%'"> {{row.metricWindow.floorsDay}} <br>
+                                    <span>Floors/day</span> </td>
+                                <td *ngIf="rowSpan" [style.width]="rowSpan ? '10%':'20%'">{{row.metricWindow.tripsDay}}<br>
+                                    <span>Trips/day</span></td>
+                                <td *ngIf="rowSpan" [style.width]="rowSpan ? '10%':'20%'">{{row.metricWindow.peakHour}}<br> <span>Peak
+                                        Usage</span></td>
+                                <td *ngIf="rowSpan" [style.width]="rowSpan ? '10%':'20%'">{{row.metricWindow.peakDay}}<br> <span>Peak
+                                        Usage</span></td>
+                                <td style="border-right: none" [style.font-size]="onFontSize(row.metricWindow.energyDay)"
+                                    *ngIf="rowSpan" [style.width]="rowSpan ? '10%':'20%'">
+                                    {{row.metricWindow.energyDay}}
+                                    <br> <span>Energy/day (kWh)</span> </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <!-- ...... End... Window Time report -->
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile *ngIf="!rowSpan" style="background-color: #f9f9f9;">
+            <div class="default-padding" style="width: 100%;" class="details-table">
+                <table class="table table-borderless" style="margin-bottom: 0;">
+                    <tbody>
+                        <tr>
+                            <th style="border-bottom: 0.5px solid #f1f1f1;">PM Forecast Date</th>
+                            <td style="border-bottom: 0.5px solid #f1f1f1;">NA</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+
+
+    <app-monitoring-charts></app-monitoring-charts>
+</div>

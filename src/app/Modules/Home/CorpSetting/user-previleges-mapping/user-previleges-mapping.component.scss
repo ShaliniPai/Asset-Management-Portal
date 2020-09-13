@@ -1,0 +1,235 @@
+body {
+  font-size: 14px !important;
+  font-weight: lighter;
+  margin: 0px 20px !important;
+}
+
+
+
+
+.title {
+  font-size: medium; font-family:Boschsansreg; font-size: 18px;
+} 
+
+.rotate{
+    -ms-transform: rotate(270deg); /* IE 9 */
+  -webkit-transform: rotate(270deg); /* Safari */
+  transform: rotate(270deg); /* Standard syntax */
+ z-index: 10;
+ 
+}
+
+.font-regular {
+  font-family: Boschsansreg;
+  font-size: 14px;    padding: 0.8% 0%;
+}
+
+.font-bold {
+  font-family: Boschsansbold;
+  font-size: 14px;    padding: 0.8% 0%;
+}
+
+ 
+.trash {
+  min-width: 30px !important;
+  height: 30px !important;
+ }
+
+ .ico {
+  min-width: 30px !important;
+  height: 30px !important;
+ }
+ 
+ .ico2 {
+  margin-left: 20px
+ }
+
+ .bt-d {
+  color: #005691  !important;
+  border: 2px solid #005691  !important;
+}
+
+.rb-btn {
+ font-family: Boschsansreg;
+ font-size: medium;min-width: 150px;border: 2px solid #005691  !important;
+}
+  .bt-d:disabled {
+    color: lightgrey  !important;
+    border: 2px solid lightgrey  !important;
+  }
+
+select {background-color: transparent;}
+
+mat-checkbox {
+  color: #cdcdcd;
+  .mat-checkbox-background {
+      background-color: #cdcdcd;
+  }
+
+  &.mat-checkbox-focused{
+      .mat-ink-ripple{
+          background-color: #00b20042;
+      }
+  }
+}
+
+::ng-deep .mat-checkbox-checked.mat-primary .mat-checkbox-background, .mat-checkbox-indeterminate.mat-primary .mat-checkbox-background{
+  background: #005691!important;
+}
+
+ td {
+  border: 2px solid #cdcdcd;
+}
+
+table {
+  min-width: 100%;
+}
+.cellpadding-header {
+  padding: 1% 4% !important;
+}
+
+.cellpadding {
+  padding: 2% 4% !important;
+}
+
+.maringal-180 {
+  margin-top: -110px;margin-left: 25px
+}
+
+
+
+
+
+// number input
+
+input[type="number"] {
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+.number-input {
+  border: 2px solid #ddd;
+  display: inline-flex;
+}
+
+.number-input,
+.number-input * {
+  box-sizing: border-box;
+}
+
+.number-input button {
+  outline:none;
+  -webkit-appearance: none;
+  background-color: transparent;
+  border: none;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  cursor: pointer;
+  margin: 0;
+  position: relative;
+}
+
+.number-input button:before,
+.number-input button:after {
+  display: inline-block;
+  position: absolute;
+  content: '';
+  width: 1rem;
+  height: 2px;
+  background-color: #212121;
+  transform: translate(-50%, -50%);
+}
+.number-input button.plus:after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.number-input input[type=number] {
+  font-family: sans-serif;
+  max-width: 5rem;
+  padding: .5rem;
+  border: solid #ddd;
+  border-width: 0 2px;
+  font-size: 2rem;
+  height: 3rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.parent-success {
+  border: none;
+  width: 100%;
+  border-radius: 0px;
+  position: fixed;
+  top: 100; right: 0; bottom: 0; left: 0;
+}
+
+.child-success {
+  background: #ebf5dd;
+  text-align: center;
+}
+
+.parent-error {
+  border: none;
+  width: 100%;
+  border-radius: 0px;
+  position: fixed;
+  top: 100; right: 0; bottom: 0; left: 0;
+}
+.child-error {
+  background: rgb(255, 141, 141);
+  text-align: center;
+}
+
+.mat-pseudo-checkbox {
+  height: 100px !important;
+  width: 100px !important;
+}
+
+.mat-pseudo-checkbox-checked::after {
+  top: 0px;
+  left: -1px;
+  width: 6px;
+  height: 2px;
+}
+
+
+
+mat-checkbox ::ng-deep .mat-checkbox-inner-container {width:20px;height: 20px;}
+.nav2 {
+  position: fixed;z-index: 10;width:75% !important;overflow-y: hidden
+}
+
+
+@media only screen and (max-width: 1100px) {
+
+  .nav2 {
+    position: fixed;z-index: 10;width:100% !important;overflow-y: hidden
+  }
+  
+  .maringal-180 {
+    margin-top: -100px;margin-left: 20px;
+    
+  }
+  mat-checkbox ::ng-deep .mat-checkbox-inner-container {width:17px;height: 17px;}
+}
+@media only screen and (max-width: 768px) {
+  .nav2 {
+    position: fixed;z-index: 10;width:100% !important;overflow-y: hidden
+  }
+  
+  .maringal-180 {
+    margin-top: -80px;margin-left: 15px
+    
+  }
+  mat-checkbox ::ng-deep .mat-checkbox-inner-container {width:14px;height: 14px;}
+}
+
+

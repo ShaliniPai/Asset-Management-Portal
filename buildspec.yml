@@ -1,0 +1,14 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+       nodejs: 10
+    commands:
+       - npm install
+       - npm install -g @angular/cli
+  build:
+    commands:
+       - ng build --prod=true --aot
+  post_build:
+    commands:
+       - aws s3 cp dist/BoschUP/ s3://up4-dev-portal.bosch-connected-elevators.com/up4-dev --recursive

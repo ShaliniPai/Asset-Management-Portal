@@ -1,0 +1,8 @@
+  <div *ngIf="barChatDatasets" class="full-wh">
+        <div style="height: 320px;width: 100%;">
+            <canvas baseChart height="320px" [datasets]="barChatDatasets" [labels]="barChartLabels" [options]="barChartOptions"
+                  [chartType]="'bar'">
+             </canvas>
+        </div>
+</div>
+

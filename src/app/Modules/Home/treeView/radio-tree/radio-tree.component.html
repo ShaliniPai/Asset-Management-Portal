@@ -1,0 +1,7 @@
+<!-- ** Note
+   1.Recursive loop for tree node until it get last leaf node
+   2.Here also value need to be emit
+       -->
+<app-treeview-radio [items]="itemsRadio" [DefaultSelector]="oSelectedValue" (selectedChange)="onChange($event[0])"
+  [config]="bTreeConfig">
+</app-treeview-radio>

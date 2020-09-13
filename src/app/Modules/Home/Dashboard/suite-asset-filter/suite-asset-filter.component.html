@@ -1,0 +1,112 @@
+<div class="full-wh">
+  <div style="display: inline-flex;flex-direction: row;width:100% ;height: 100%;">
+    <div style="flex: auto 1;">
+      <mat-drawer-container class="sidenav-container">
+        <mat-drawer #drawer position="end" class="sidenav" fixedInViewport
+          [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
+          [opened]="(isHandset$ | async) === false ?false:false" style="border-left: none;">
+          <mat-toolbar style="font-size:18px;font-weight:400">
+            {{isOpenedSideAsset ?'Select Assets':'Select Metric Window' }} </mat-toolbar>
+          <div class="default-padding" style="padding-top: 0;">
+
+            <!-- ***
+          Here, There are two types of TreeViews 
+          Type 1: Radio button tree view : To enable we have send param called 'radio' in URL
+          TYpe 2 : Checkbox tree view : To enable we have send param called 'Checkbox' in
+          -->
+            <!-- ** Radio Tree View **-->
+            <div *ngIf="treeType === 'radio'">
+              <app-radio-tree [DisableParent]="false" [OPTreeViewHirarchyModel]="treeViewConfig"
+                [IPtreeviewHeight]="1550">
+              </app-radio-tree>
+            </div>
+            <!-- ...End Radio Treeview -->
+
+            <!-- ** Checkbox Tree View **-->
+            <div *ngIf="favDevices && treeType === 'checkbox'">
+              <app-checkbox-tree *ngIf="isOpenedSideAsset" [OPTreeViewHirarchyModel]="treeViewConfig"
+                [OPDefaultCheckList]="favDevices" (opTreeSelectedItem)="OnTreeSelectedItem($event)">
+              </app-checkbox-tree>
+
+              <mat-radio-group *ngIf="isOpenedSideWindow" [(ngModel)]="selWindowItem"
+                (change)="onChangeWindowTime(selWindowItem)"
+                style="display: flex;flex-direction:column;line-height: 2.5;">
+                <mat-radio-button *ngFor="let row of listMetricWindow" [value]="row.value" style="font-weight: 400;">{{row.text}}
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
+          <!-- ... End Checkbox Treeview -->
+          <div style="text-align: center;"><br>
+            <button mat-button class="default-btn-save" style="width: 91%;" (click)="onSaveAsDefault()">
+              <i class="fa fa-save"></i>&nbsp; Save as default</button>
+          </div>
+        </mat-drawer>
+
+        <mat-drawer-content style="">
+          <!-- <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>BoschUP</span>
+    </mat-toolbar> -->
+
+          <!-- Add Content Here -->
+          <div class="full-wh" style="display: flex;flex-direction: row;overflow: auto;">
+            <div style="flex: auto 1;margin-right: 50px;overflow: auto;"
+              [style.margin-right]="isOpenedSideWindow ? '85px':'50px'">
+              <div style="width: 100%;height: 100%;display: block; overflow: auto;">
+                <router-outlet></router-outlet>
+              </div>
+            </div>
+
+            <!----------------------------- SELECT WindowTime/Assert Arrows ------------------------------------- -->
+
+            <div>
+              <div class="sidenavToogle-btn-align" *ngIf="isOpenedSideWindow || isOpenedSideAsset"
+                style="width: 34px;border-left:solid 1px rgba(0,0,0,.12);">
+                <div style="position: absolute;z-index: 10;">
+                  <button mat-icon-button
+                    (click)="onToggleSideNav( isOpenedSideWindow ? 'window': 'asset', isOpenedSideWindow ? !isOpenedSideWindow: !isOpenedSideAsset )"
+                    style="position: absolute;top:15px;transform: rotate(0);" class="sidenav-toggle-btn">
+                    <i class="fa fa-angle-right" style="font-size: 29px;"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!----------------------------- SELECT ASSETS Test ------------------------------------- -->
+              <div class="sidenavToogle-btn-align" [style.right]="!isOpenedSideAsset && isOpenedSideWindow  ?'40px':0"
+                *ngIf="!isOpenedSideAsset">
+                <div style="position: absolute;z-index: 10;">
+                  <button mat-button (click)="onToggleSideNav('asset', !isOpenedSideAsset)"
+                    style="position: absolute;left: -31px;top: 35px;">
+                    <span *ngIf="!isOpenedSideAsset || !drawer.opened" style="font-weight: 400;">Select Assets <br>
+                    </span>
+                    <i class="fa fa-angle-left" style="transform: rotate(270deg);font-size: 29px;"></i>
+                  </button>
+                </div>
+              </div>
+
+
+            </div>
+
+          </div>
+        </mat-drawer-content>
+      </mat-drawer-container>
+    </div>
+    <!----------------------------- SELECT WINDOWS METRICS Test ------------------------------------- -->
+    <div class="side-windowTime-btn" *ngIf="!isOpenedSideWindow">
+      <button mat-button (click)="onToggleSideNav('window', !isOpenedSideWindow)" style="margin-left: -7px;">
+        <span *ngIf="!drawer.opened || !isOpenedSideWindow" style="font-weight: 400;">Select Metric Window <br></span>
+        <i [ngClass]="isOpenedSideWindow ?'fa fa-angle-right': 'fa fa-angle-left'"
+          style="transform: rotate(270deg);font-size: 29px;"></i>
+      </button>
+    </div>
+
+  </div>
+</div>

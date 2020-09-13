@@ -1,0 +1,87 @@
+$body_Padding: 15px;
+$toolbar-height:97px;
+$bodyMax_width :1440px;
+
+.toolbar-fixed{
+  position: fixed;
+  max-width: $bodyMax_width;
+  width: 100%;
+  top: 0;
+  z-index: 100;
+}
+
+
+.logo-title {
+  line-height: 15px;
+  padding-top: 25px;
+  padding-left: 15px;
+}
+.logo-title > .title {
+  font-weight: 800;
+  font-size: 27px;
+  letter-spacing: 3.1px;
+}
+.logo-title > .sub-title {
+  letter-spacing: 1px;
+  font-size: 14px;
+  font-weight: 400;
+}
+.mat-toolbar-row {
+   height: $toolbar-height !important;
+}
+
+// .bodyContent-align {
+//   overflow: auto;
+//   position: relative;
+// }
+// .bodyContent-align .inside-align {
+//   width: 100%;
+//   position: absolute;
+//   overflow: auto;
+// }
+
+// .custom-styles {
+//   padding-top: 5px;
+//   background-color: white;
+//   position: sticky;
+//   top: 69px;
+//   z-index: 1;
+// }
+
+
+.ver-line {
+  border: 1px inset #ffffff78 !important;
+  margin: 0 5px;
+  font-size: 15px;
+}
+
+.tenant-title {
+  position: absolute;
+  right: 26px;
+  text-align: left;
+  top: 19px;
+  font-size: 20px;
+  letter-spacing: 1.3px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 195px;
+  font-family: Boschsansreg;
+}
+
+.spinner-container {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: #f5f5f5e3;
+  z-index: 100; 
+  left: 0;
+  top: 145px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/*.... End Mat nav tab custom styles*/
+   
+  

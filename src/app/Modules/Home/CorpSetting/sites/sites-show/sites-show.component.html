@@ -1,0 +1,73 @@
+<h4 class="default-header">Existing Sites</h4>
+<!-- --------------------------- SITE TABLE -------------------------------->
+<div class="site-table-border">
+    <mat-table [dataSource]="Sites">
+        <ng-container [matColumnDef]="'sno'">
+            <mat-header-cell *matHeaderCellDef class="header-style">Sr.No</mat-header-cell>
+            <mat-cell *matCellDef="let index=index">{{index+1}}</mat-cell>
+        </ng-container>
+
+        <!-- Column Zone -->
+        <ng-container [matColumnDef]="'zone'">
+            <mat-header-cell *matHeaderCellDef class="header-style">Zone
+                <button mat-icon-button [matMenuTriggerFor]="MenuZoneFilter"><img style="width: 19px;"
+                        src="../../../../../../assets/Images/Icons/{{onImageFitler('zone')}}.PNG"></button>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row">{{row.zone}}</mat-cell>
+        </ng-container>
+
+        <ng-container [matColumnDef]="'name'">
+            <mat-header-cell *matHeaderCellDef class="header-style">Site Name <button mat-icon-button
+                    [matMenuTriggerFor]="MenuSiteFilter">
+                    <img style="width: 19px;"
+                        src="../../../../../../assets/Images/Icons/{{onImageFitler('siteName')}}.PNG"></button>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.siteName}}</mat-cell>
+        </ng-container>
+
+        <ng-container [matColumnDef]="'view'">
+            <mat-header-cell *matHeaderCellDef class="header-style"></mat-header-cell>
+            <mat-cell *matCellDef="let row" style="justify-content: flex-end;">
+                <button class="rb-btn rb-border-only" (click)="onView(row)">View Details</button>
+                <!-- <button class="rb-btn rb-border-only">View Details</button> -->
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="tbColumns;sticky:true" style="z-index: 1;"></mat-header-row>
+        <mat-row *matRowDef="let row;columns:tbColumns" style="z-index: 1;"></mat-row>
+    </mat-table>
+    <label style="padding: 15px 10px;" *ngIf="!Sites?.length"><mat-icon style="vertical-align: bottom;">info</mat-icon> No site found</label>
+</div>
+<!-- ...........End Site table -->
+
+
+<!-- --------------------- Menu - FITLER -ZONE ----------------------->
+<mat-menu #MenuZoneFilter="matMenu">
+    <div (click)="$event.stopPropagation()">
+        <!-- Checkbox -ALL -->
+        <mat-selection-list [(ngModel)]="allZoneFilter" color="primary" (selectionChange)="onFilterSelectAll('zone')">
+            <mat-list-option [value]="'all'">All</mat-list-option>
+        </mat-selection-list>
+        <mat-divider></mat-divider>
+        <!-- Checkbox -Items -->
+        <mat-selection-list [(ngModel)]="itemsZoneFitler" color="primary" (selectionChange)="onFilterChange()">
+            <mat-list-option *ngFor="let val of zoneFilter" [value]="val">{{val}}</mat-list-option>
+        </mat-selection-list>
+    </div>
+</mat-menu>
+
+<!-- --------------------- Menu - FITLER -SITE NAME ----------------------->
+<mat-menu #MenuSiteFilter="matMenu">
+    <div (click)="$event.stopPropagation()">
+        <!-- Checkbox -ALL -->
+        <mat-selection-list [(ngModel)]="allSiteFilter" color="primary"
+            (selectionChange)="onFilterSelectAll('siteName')">
+            <mat-list-option [value]="'all'">All</mat-list-option>
+        </mat-selection-list>
+        <mat-divider></mat-divider>
+        <!-- Checkbox -Items -->
+        <mat-selection-list [(ngModel)]="itemsSiteFitler" color="primary" (selectionChange)="onFilterChange()">
+            <mat-list-option *ngFor="let val of siteFilter" [value]="val">{{val}}</mat-list-option>
+        </mat-selection-list>
+    </div>
+</mat-menu>

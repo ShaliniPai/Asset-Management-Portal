@@ -1,0 +1,52 @@
+[
+    {
+        "assetId" : "1000",
+        "assetName": "Elevator 1",
+        "status": "active",
+        "floors": 90,
+        "trips": 30,
+        "utilization": 70,
+        "downtime": 10,
+        "energy": 15256
+    },
+    {
+        "assetId" : "1001",
+        "assetName": "Elevator 2",
+        "status": "idle",
+        "floors": 75,
+        "trips": 20,
+        "utilization": 70,
+        "downtime": 10,
+        "energy": 25
+    },
+    {
+        "assetId" : "1002",
+        "assetName": "Elevator 3",
+        "status": "idle",
+        "floors": 75,
+        "trips": 20,
+        "utilization": 70,
+        "downtime": 10,
+        "energy": 25
+    },
+    {
+        "assetId" : "1003",
+        "assetName": "Elevator 4",
+        "status": "idle",
+        "floors": 75,
+        "trips": 20,
+        "utilization": 70,
+        "downtime": 10,
+        "energy": 25
+    },
+    {
+        "assetId" : "1004",
+        "assetName": "Elevator 5",
+        "status": "idle",
+        "floors": 75,
+        "trips": 20,
+        "utilization": 70,
+        "downtime": 10,
+        "energy": 25
+    }
+]

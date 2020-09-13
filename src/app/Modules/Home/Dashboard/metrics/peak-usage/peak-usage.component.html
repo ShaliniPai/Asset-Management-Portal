@@ -1,0 +1,19 @@
+<div *ngIf="barChatDatasets" class="full-wh">
+    <div class="weektype-radio-align" *ngIf="reportType == 'hour'">
+        <!-- <mat-radio-group [(ngModel)]="weekType" (change)="onSelectWeektype(weekType)">
+        <mat-radio-button value="weekday">Weekday (Monday to Friday)</mat-radio-button> &nbsp;&nbsp;&nbsp;&nbsp;
+        <mat-radio-button value="weekend">Weekend (Saturday & Sunday)</mat-radio-button>
+    </mat-radio-group> -->
+
+
+        <mat-selection-list color="primary" [(ngModel)]="weekType" (selectionChange)="onSelectWeektype(weekType)" style="display: inline-flex;flex-direction: row;">
+            <mat-list-option [checkboxPosition]="'before'" value="weekday" style="white-space: nowrap; margin-right: 10px;">Weekday (Monday to Friday)</mat-list-option>
+            <mat-list-option [checkboxPosition]="'before'" value="weekend" style="white-space: nowrap;">Weekend (Saturday & Sunday)</mat-list-option>
+        </mat-selection-list>
+    </div>
+    <div style="height: 320px;width: 100%;">
+        <canvas baseChart height="320px" [datasets]="barChatDatasets" [labels]="barChartLabels"
+            [options]="barChartOptions" [chartType]="'bar'">
+        </canvas>
+    </div>
+</div>

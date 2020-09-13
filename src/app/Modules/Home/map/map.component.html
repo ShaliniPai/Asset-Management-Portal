@@ -1,0 +1,21 @@
+<!--  Refference URL : https://www.freakyjolly.com/angular-7-6-add-google-maps-in-angular-2-plus-applications-using-angular-google-maps-module-agm-core-easily/ -->
+<div>
+
+    <h3 style="margin: 10px auto;">Site Map</h3>
+    <input type="text" class="form-control" style="height: 40px;width: 100%;" (keydown.enter)="$event.preventDefault()" placeholder="Search Location"
+        autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search>
+
+    <div style="overflow: auto;">
+        <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" style="height:360px">
+            <agm-marker [markerDraggable]="true" (drag)="onMarkerDrag($event)" [longitude]="longitude"
+                [latitude]="latitude">
+            </agm-marker>
+        </agm-map>
+    </div>
+    <mat-dialog-actions align="end" style="margin-top: 20px;">
+        <button mat-stroked-button mat-dialog-close>Cancel</button>
+        <button mat-stroked-button mat-dialog-close [mat-dialog-close]="{latitude:latitude, longitude:longitude}" cdkFocusInitial>Pick
+            coordinates</button>
+
+    </mat-dialog-actions>
+</div>

@@ -1,0 +1,144 @@
+::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle,
+::ng-deep radio-button.mat-accent.mat-radio-checked .mat-radio-inner-circle {
+    border-color: #d1d1d1;
+}
+
+::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-inner-circle{
+background-color: #005691;
+}
+::ng-deep .mat-radio-button.mat-accent.mat-radio-disabled .mat-radio-inner-circle{
+  background-color: #d1d1d1;
+  }
+
+#disableDiv{
+    opacity: 0.4;
+
+}
+
+ rb-form-select{
+    // margin-top: -10px;
+    border: 1px solid #d1d1d1;
+  }
+ 
+
+ .openside-toggle-align[_ngcontent-c19] {
+    right: 320px;
+}
+
+::ng-deep .mat-checkbox-checked .mat-checkbox-background {
+    background-color: #005691;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle{
+    background-color: blue !important;
+  }
+
+  .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+    background-color:rgba(66, 134, 244,.26);
+  }
+
+  .boschlight{
+    outline: 0;
+    width: 147px;
+    border: 1px  solid #005691;
+    padding: 11px;
+    color: #005691;
+    font-size: 16px;
+    background: white;
+    cursor: pointer;
+    height: 46px;
+  }
+  
+.boschdark{
+    outline: 0;
+    width: 147px;
+    border: 0;
+    padding: 11px;
+    color: #FFFFFF;
+    font-size: 14px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+    background: #005691;
+    height: 46px;
+  }
+
+  // .headings {
+  //   font-family: boschsansmed;
+  //   font-size: 15px;
+  // }
+  
+  button[disabled], html input[disabled] {
+    cursor: default;
+background-color: white;
+border: 1px solid #cacaca;
+
+}
+  
+input[disabled] {
+  cursor: default;
+background-color:  #cacaca;;
+border: 1px solid #cacaca;
+color: white;
+
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+.disPer {
+  height: 47px;
+  width: 30%;
+  background-color: white;
+  border:1px solid #cacaca
+}
+
+.disable-add-btn-onEdit{
+  outline: 0;
+  width: 147px;
+  border: 1px  solid #cacaca;
+  padding: 11px;
+  color: #cacaca;
+  font-size: 16px;
+  cursor: default;
+  height: 46px;
+  background-color: darkgray !important;
+}
+
+::ng-deep .mat-form-field-underline {
+  display: none;
+}
+
+::ng-deep .mat-form-field-label-wrapper label {
+  color:#808080 !important;
+}
+::ng-deep .mat-form-field .mat-select-arrow{
+  color:#808080 !important;
+}
+
+.form-inline .form-check-label{
+  font-weight: 400 !important;
+  font-family: 'roboto' !important;   
+}
+
+::ng-deep .mat-form-field-hide-placeholder .mat-form-field-label-wrapper {
+  top: -20px;
+}
+
+::ng-deep .mat-select-arrow{
+  margin: 0 4px 0px 0 !important;
+}
+::ng-deep .mat-select-value{
+  margin: 0 40px 10px 0 !important;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+  bottom: 10px;
+}

@@ -1,0 +1,75 @@
+
+<div style=" padding: 2px 10px 10px 15px;width: 95%;">
+    <h5 style="padding-left:15px;padding-top: 20px;font-family: boschsansmed;font-weight: 400;font-size: 20px;">Current Defined Events</h5>
+    <div style="padding:0 0 0 10px;">
+        <div class="css-alert-box" style="margin-top: -10px;">
+            <!-- Table that gets its row increased as new data comes-->
+            <table mat-table [dataSource]="events" style="width:100%;background-color: white">
+                <ng-container matColumnDef="sno">
+                    <th mat-header-cell *matHeaderCellDef class="header-style" scope="col">S.No</th>
+                    <td mat-cell *matCellDef="let row;let i=index;" class="header-line-child">
+                        {{i+1}}
+                    </td>
+                </ng-container>
+                <!-- Assuming the one row of object as row, asset name is row.asset-->
+                <ng-container matColumnDef="asset">
+                    <th mat-header-cell *matHeaderCellDef class="header-style" scope="col">Asset</th>
+                    <td mat-cell *matCellDef="let row" class="header-line-child">{{row.asset}}</td>
+                </ng-container>
+                <!-- Assuming the one row of object as row, criteria is row.criteria-->
+                <ng-container matColumnDef="criteria">
+                    <th mat-header-cell *matHeaderCellDef class="header-style" scope="col">Criteria</th>
+                    <td mat-cell *matCellDef="let row" class="header-line-child">{{row.criteria}} {{row.threshold}} <p style="display: inline;" *ngIf="row.criteria !== 'Utilization less than' && row.criteria !== 'ENERGY per day greater than'">mins</p> <p style="display: inline;" *ngIf="row.criteria === 'ENERGY per day greater than'" >kWhr</p><p style="display: inline;" *ngIf="row.criteria === 'Utilization less than'">%</p></td>
+                </ng-container>
+                <!-- Assuming the one row of object as row, notification medium is row.medium-->
+                <ng-container matColumnDef="medium">
+                    <th mat-header-cell *matHeaderCellDef class="header-style" scope="col">Medium</th>
+                    <td mat-cell *matCellDef="let row" class="header-line-child">{{row.notifications.mode}}</td>
+                </ng-container>
+                <!-- Assuming the one row of object as row, name is row.firstName-->
+                <ng-container matColumnDef="lvl1">
+                    <th mat-header-cell *matHeaderCellDef class="header-style" scope="col">Level 1</th>
+                    <td mat-cell *matCellDef="let row" class="header-line-child">{{row.Alerts[0].firstName}}<br *ngIf="row.Alerts[1]">{{row.Alerts[1] ? row.Alerts[1].firstName:''}}<br *ngIf="row.Alerts[2]">{{ row.Alerts[2] ? row.Alerts[2].firstName : ''}}</td>
+                </ng-container>
+                <ng-container matColumnDef="lvl2">
+                    <th mat-header-cell *matHeaderCellDef class="header-style" scope="col">Level 2</th>
+                    <td mat-cell *matCellDef="let row" class="header-line-child">{{row.Alerts2[0] ? row.Alerts2[0].firstName:''}}</td>
+                </ng-container>
+                <ng-container matColumnDef="lvl3">
+                    <th mat-header-cell *matHeaderCellDef class="header-style" scope="col">Level 3</th>
+                    <td mat-cell *matCellDef="let row" class="header-line-child">{{row.Alerts3[0] ? row.Alerts3[0].firstName:''}}</td>
+                </ng-container>
+                <!-- Delete icon in front of each row-->
+                <ng-container matColumnDef="delete" style ="margin-right: 0px">
+                    <th mat-header-cell *matHeaderCellDef class="header-style" scope="col">&nbsp;</th>
+                    <td mat-cell *matCellDef="let row" class="header-line-child">
+                        <div>
+                            <img class="trash ico2 i" alt="delete-icon" (click)= "Delete(row._id)"
+                            src="../../../../../../assets/Images/Icons/delete.svg">
+                        </div>    
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="otblColumns;sticky:true"></tr>
+                <tr mat-row *matRowDef="let row;columns:otblColumns"></tr> 
+            </table>
+        </div>
+        <!-- If Delete icon is pressed, 2 buttons will be shown, confirm deletion and cancel-->
+        <div *ngIf="ConfirmDeletion" style="margin-left:4px">
+            <br>
+            <button (click) = "ConfirmDelete()" style="float: right !important;margin: 1px 0px;"
+                class="rb-btn rb-primary bt pull-right getRightDelBtn">Confirm Deletion</button>
+            <button (click) = "Cancel()"
+                style="float: right !important;margin: 1px 7px;" class="rb-btn bt bt-d pull-right">Cancel</button>
+        </div>
+    </div>
+</div>
+<div *ngIf="IsDel" class="parent-del">
+    <div class="child-del">
+        <img class="Ico-Del" alt=""
+        style="max-width: 50px !important;max-height: 50px !important;margin: 10px;stroke: red !important; fill: red !important;"
+        src="../../../assets/ico/user-remove.svg"> <span style="font-size: 14px;margin:10px 20px;">{{Message}}</span>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,321 @@
+<div *ngIf="pageType=='view'" class="css-edit-button">
+    <div> <button class="rb-btn rb-primary" style="font-size:14px;width: 120px;" (click)="onClickEdit()">Edit</button>
+    </div>
+</div>
+<div class="cssLeak-sitesShow">
+    <h4 class="default-header"> &nbsp;{{onPageTitle()}} </h4>
+    <form (ngSubmit)="onSubmit(FBSite, saveType)" [formGroup]="FBSite" #formSumit="ngForm">
+        <div class="layout-row" style="height: 300px;">
+
+            <!----------------- Site Name, Des, map, Timezone ----------->
+            <div style="width: 50%;padding: 0 20px 0 0;">
+                <div class="full-wh box-border">
+                    <br>
+
+                    <table class="table site-table">
+                        <tbody>
+                            <tr>
+                                <!------------------ SITE NAME  ------------------------>
+                                <th>Site Name*</th>
+                                <td *ngIf="pageType==='save'">
+                                    <mat-form-field [appearance]="'outline'" style="min-width: 69%;">
+                                        <input matInput [formControlName]="'siteName'">
+                                        <mat-error *ngIf="FBSite.get('siteName').hasError('required')">Site name is
+                                            required
+                                        </mat-error>
+                                    </mat-form-field>
+                                </td>
+                                <td *ngIf="pageType==='view'" class="css-view-tb">
+                                    <label> {{FBSite.get('siteName').value}} </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <!------------------ DESCRIPTION  ------------------------>
+                                <th>Description of Site</th>
+                                <td *ngIf="pageType==='save'">
+                                    <mat-form-field [appearance]="'outline'" style="min-width: 69%;">
+                                        <input matInput [formControlName]="'des'">
+                                    </mat-form-field>
+                                </td>
+                                <td *ngIf="pageType==='view'" class="css-view-tb">
+                                    <label> {{FBSite.get('des').value}} </label>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <!------------------ MAP LOCATION  ------------------------>
+                                <th>Map Location*</th>
+                                <td style="height: 66px;vertical-align: baseline;" *ngIf="pageType==='save'">
+                                    <form [formGroupName]="'loc'" class="layout-row">
+                                        <!-- <mat-form-field [appearance]="'outline'" 
+                                            style="min-width: 32.5%;max-width: 32.5%;">
+                                            <input matInput [formControlName]="'latitude'" placeholder="Latitude">
+                                        </mat-form-field>
+                                        &nbsp;&nbsp;
+                                        <mat-form-field [appearance]="'outline'"
+                                            style="min-width: 32.5%;max-width: 32.5%;">
+                                            <input matInput [formControlName]="'longitude'" placeholder="Longitude">
+                                        </mat-form-field> &nbsp;&nbsp; -->
+
+                                        <button type="button" mat-icon-button (click)="openDialog()"
+                                            style="vertical-align: super;color:lightcoral;border: 1px solid #e0e0e0;"
+                                            matTooltip="Pick the Latitude & Longitude using Google map">
+                                            <mat-icon>room</mat-icon>
+                                        </button>
+
+                                        <div style="padding-top: 15px;margin-left: 15px;">
+                                            <label *ngIf="FBSite.get('loc').valid"
+                                                style="font-size: 19px;margin-left: -39px;white-space: nowrap;">
+                                                <span style="color: slategray;">Latitude</span>
+                                                :{{FBSite.get('loc').get('latitude').value}} , <span
+                                                    style="color: slategray;">Longitude</span>
+                                                :{{FBSite.get('loc').get('longitude').value}}</label>
+                                            <mat-error
+                                                *ngIf="FBSite.get('loc').get('latitude').hasError('required') && formSumit.submitted">
+                                                Location is required</mat-error>
+                                        </div>
+                                    </form>
+
+
+                                </td>
+                                <td *ngIf="pageType==='view'" class="css-view-tb">
+                                    <label>
+                                        <span style="color: slategray;">Latitude</span>
+                                        :{{FBSite.get('loc').get('latitude').value}} , <span
+                                            style="color: slategray;">Longitude</span>
+                                        :{{FBSite.get('loc').get('longitude').value}}</label>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <!------------------ TIME-ZONE  ------------------------>
+                                <th>Time Zone*</th>
+                                <td *ngIf="pageType==='save'">
+                                    <mat-form-field [appearance]="'outline'" style="min-width: 69%;">
+                                        <mat-select [formControlName]="'timezone'">
+                                            <mat-option [value]="tz.value" *ngFor="let tz of timeZones">
+                                                {{tz.text}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </td>
+                                <td *ngIf="pageType==='view' && timeZones" class="css-view-tb">
+                                    <label> {{onGetTimezonelabel(FBSite.get('timezone').value)}} </label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+
+                </div>
+            </div>
+            <!-- ....End -->
+
+            <!----------------- Zone, Wifi Information ----------->
+            <div class="flex" style="padding: 0 20px 0 0;">
+                <div class="full-wh box-border">
+                    <br>
+                    <table class="table site-table">
+                        <tbody>
+                            <tr>
+                                <th>Zone*</th>
+                                <td *ngIf="pageType==='save'">
+                                    <mat-form-field [appearance]="'outline'" style="min-width: 70%;">
+                                        <mat-select [formControlName]="'zone'" placeholder="Choose Zone">
+                                            <mat-option *ngFor="let z of zones" [value]="z._id">{{z.zname}}</mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="FBSite.get('zone').hasError('required')">Zone is required
+                                        </mat-error>
+                                    </mat-form-field>
+                                </td>
+
+                                <td *ngIf="pageType==='view' && zones" class="css-view-tb">
+                                    <label> {{FBSite.get('zone').value}} </label>
+                                </td>
+                            </tr>
+                            <tr *ngIf="pageType==='save'">
+                                <th></th>
+                                <td style="height: 66px;">
+                                    <div style="max-width: 69%;text-align: right;" class="layout-row">
+                                        <mat-form-field *ngIf="isEnableAddZone" [appearance]="'outline'" class="flex">
+                                            <input matInput [formControlName]="'cusZone'" [(ngModel)]="cusZone">
+                                        </mat-form-field>
+
+                                        <span *ngIf="isEnableAddZone">
+
+                                            <button type="button" mat-icon-button (click)="onResetAddZone()">
+                                                <mat-icon>replay</mat-icon>
+                                            </button>
+                                            <button type="button" [disabled]="!cusZone" (click)="onAddZone(cusZone)"
+                                                mat-icon-button>
+                                                <mat-icon>save</mat-icon>
+                                            </button>
+                                        </span>
+                                        <span class="flex" *ngIf="!isEnableAddZone"></span>
+                                        <span *ngIf="!isEnableAddZone" class="add-zone-btn" style="padding: 0 0 19px;">
+                                            <button type="button" mat-stroked-button class="default-btn-border"
+                                                (click)="onEnableZone()">Add 'Zone'</button>
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>Wifi SSID*</th>
+                                <td *ngIf="pageType==='save'">
+                                    <mat-form-field [appearance]="'outline'" style="min-width: 69%;">
+                                        <input matInput [formControlName]="'wifiSSID'">
+                                        <mat-error *ngIf="FBSite.get('wifiSSID').hasError('required')">WI-FI SSID is
+                                            required</mat-error>
+                                    </mat-form-field>
+                                </td>
+                                <td *ngIf="pageType==='view'" class="css-view-tb">
+                                    <label> {{FBSite.get('wifiSSID').value}} </label>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>Password*</th>
+                                <td *ngIf="pageType==='save'">
+                                    <mat-form-field [appearance]="'outline'" style="min-width: 69%;">
+                                        <input matInput [formControlName]="'wifiPassword'">
+                                        <mat-error *ngIf="FBSite.get('wifiPassword').hasError('required')">WI-FI
+                                            Password is required</mat-error>
+                                    </mat-form-field>
+                                </td>
+                                <td *ngIf="pageType==='view'" class="css-view-tb">
+                                    <label> {{FBSite.get('wifiPassword').value}} </label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- .....End -->
+
+        </div>
+
+        <!--------------------------------------
+             Operationg Hours 
+        --------------------------------------->
+        <br>
+        <div style="padding: 0 20px 0 0;">
+            <div class="full-wh box-border" style="padding:15px 15px 10px 35px">
+                <div style="margin-right: 20px;">
+                    <span style="font-weight: 500;">Operating Hours*</span> <br>
+                    <mat-form-field [appearance]="'outline'" class="selbtn-remove-padding">
+                        <mat-select [formControlName]="'weekCatogery'">
+                            <mat-option value="weekdays">Weekdays</mat-option>
+                            <mat-option value="weekend">Weekend</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <!-- ------------------------------- WEEKDAYS  ---------------->
+                <form [formGroupName]="'opHours'">
+                    <form [formGroupName]="'weekdays'" *ngIf="FBSite.get('weekCatogery').value =='weekdays'">
+                        <mat-selection-list [formControlName]="'days'"
+                            style="display: inline-flex;flex-direction: row;margin-left: 0px;" color="primary">
+                            <mat-list-option [checkboxPosition]="'before'" [disabled]="pageType=='view'"
+                                *ngFor="let day of dayNumnbers" [value]="day.no">
+                                {{day.name}}</mat-list-option>
+                        </mat-selection-list><br>
+                        <form [formGroupName]="'time'" style="margin-left: 17px;" class="layout-row css-input-align">
+                            <b style="font-weight: 500;padding-top: 3px;"> From:</b> &nbsp;&nbsp;
+                            <form [formGroupName]="'from'" *ngIf="pageType=='save'">
+                                <input type="number" max="12" min="1" [formControlName]="'hh'">
+                                <input type="number" step="15" max="60" (change)="onMinutesOverFlow('weekdays', 'from')"
+                                    min="0" [formControlName]="'mm'">
+                                <select [formControlName]="'meridiem'">
+                                    <option value="AM">AM</option>
+                                    <option value="PM">PM</option>
+                                </select>
+                            </form>
+                            <label class="css-view-time"
+                                *ngIf="pageType=='view'">{{onViewTime(FBSite.get('opHours').get('weekdays').get('time').get('from').value)}}
+                            </label>
+
+                            <span style="margin-left: 10%;"></span>
+                            <b style="font-weight: 500;padding-top: 3px;">To :</b>&nbsp;&nbsp;
+                            <form [formGroupName]="'to'" *ngIf="pageType=='save'">
+                                <input type="number" max="12" min="1" [formControlName]="'hh'">
+                                <input type="number" step="15" max="60" (change)="onMinutesOverFlow('weekdays', 'to')"
+                                    min="0" [formControlName]="'mm'">
+                                <select [formControlName]="'meridiem'">
+                                    <option value="AM">AM</option>
+                                    <option value="PM">PM</option>
+                                </select>
+                            </form>
+                            <label class="css-view-time"
+                                *ngIf="pageType=='view'">{{onViewTime(FBSite.get('opHours').get('weekdays').get('time').get('to').value)}}
+                            </label>
+
+                            <!-- <input type="time" [formControlName]="'to'"> -->
+                        </form>
+                    </form>
+                    <!-- .... End weedays -->
+
+                    <!-- -------- WEEKENDS  ---------------->
+                    <form [formGroupName]="'weekend'" *ngIf="FBSite.get('weekCatogery').value =='weekend'">
+                        <mat-selection-list [formControlName]="'days'" style="display: inline-flex;flex-direction: row;"
+                            color="primary">
+                            <mat-list-option [checkboxPosition]="'before'" [disabled]="pageType=='view'"
+                                *ngFor="let day of dayNumnbers" [value]="day.no">
+                                {{day.name}}</mat-list-option>
+                        </mat-selection-list>
+                        <br>
+                        <!-- <form [formGroupName]="'time'" style="margin-left: 17px;">
+                            <b style="font-weight: 500;"> From:</b> &nbsp;&nbsp;
+                            <input type="time" [formControlName]="'from'">
+
+                            <span style="margin-left: 10%;"></span>
+
+                            <b style="font-weight: 500;">To :</b>&nbsp;&nbsp;<input type="time"
+                                [formControlName]="'to'">
+                        </form> -->
+                        <form [formGroupName]="'time'" style="margin-left: 17px;" class="layout-row css-input-align">
+                            <b style="font-weight: 500;padding-top: 3px;"> From:</b> &nbsp;&nbsp;
+                            <!-- <input type="time" [formControlName]="'from'"> -->
+                            <form [formGroupName]="'from'" *ngIf="pageType=='save'">
+                                <input type="number" max="12" min="1" [formControlName]="'hh'">
+                                <input type="number" step="15" max="60" (change)="onMinutesOverFlow('weekend', 'from')"
+                                    min="0" [formControlName]="'mm'">
+                                <select [formControlName]="'meridiem'">
+                                    <option value="AM">AM</option>
+                                    <option value="PM">PM</option>
+                                </select>
+                            </form>
+                            <label class="css-view-time"
+                                *ngIf="pageType=='view'">{{onViewTime(FBSite.get('opHours').get('weekend').get('time').get('from').value)}}
+                            </label>
+
+                            <span style="margin-left: 10%;"></span>
+                            <b style="font-weight: 500;padding-top: 3px;">To :</b>&nbsp;&nbsp;
+                            <form [formGroupName]="'to'" *ngIf="pageType=='save'">
+                                <input type="number" max="12" min="1" [formControlName]="'hh'">
+                                <input type="number" step="15" max="60" (change)="onMinutesOverFlow('weekend', 'to')"
+                                    min="0" [formControlName]="'mm'">
+                                <select [formControlName]="'meridiem'">
+                                    <option value="AM">AM</option>
+                                    <option value="PM">PM</option>
+                                </select>
+                            </form>
+                            <label class="css-view-time"
+                                *ngIf="pageType=='view'">{{onViewTime(FBSite.get('opHours').get('weekend').get('time').get('to').value)}}
+                            </label>
+                            <!-- <input type="time" [formControlName]="'to'"> -->
+                        </form>
+                    </form>
+                    <!-- .... End Weekends -->
+                </form>
+            </div>
+        </div>
+        <!-- ... End Operting hours -->
+        <div style="text-align: right;padding: 10px 10px 0 0;">
+            <button class="rb-btn rb-primary" type="submit" style="font-size:14px;width: 120px;"
+                *ngIf="pageType!='view'"> {{saveType === 'add'?'ADD':'Save'}} </button>
+        </div>
+    </form>
+    <!-- {{FBSite.value|json}} -->
+</div>

@@ -1,0 +1,32 @@
+$body_Padding: 15px;
+ 
+.nav-icons .fa {
+  font-size: 16px;
+  // font-size: 18px;
+}
+.nav-icons button {
+  margin-top: 3px;
+}
+.ver-line {
+  border: 1px inset #efefef4d !important;
+  margin: 0 5px;
+}
+.companyName-align {
+  position: absolute;
+  top: -22px;
+  letter-spacing: 1.3px;
+  // width: 100%;
+  font-family: Boschsansreg;
+  font-size: 20px;
+  text-align: center;
+  white-space: nowrap;
+  right: 13px;
+}
+
+.ob-title {
+  font-family: Boschsansmed !important;
+  font-size: 20px;
+  color: #005691;
+  padding: 5px 5px;
+  margin-bottom: 0px;
+}

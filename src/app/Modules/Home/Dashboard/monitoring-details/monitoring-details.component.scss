@@ -1,0 +1,30 @@
+::ng-deep .mat-list-base .mat-list-item .mat-list-item-content,
+.mat-list-base .mat-list-option .mat-list-item-content {
+  padding: 0 6px !important;
+  height: 55px;
+  justify-content: flex-start;
+  align-items: start;
+}
+
+.mat-list-base .mat-list-item.mat-2-line,
+.mat-list-base .mat-list-option.mat-2-line {
+  height: 55px;
+}
+::ng-deep .mat-grid-tile .mat-figure {
+  justify-content: flex-start !important;
+  align-items: start !important;
+}
+
+.details-table {
+  width: 100%;
+}
+
+.details-table .table tbody tr th {
+  width: 45%;
+  font-weight: 500;
+}
+
+.table-borderless th,
+.table-borderless td {
+  border: none;
+}

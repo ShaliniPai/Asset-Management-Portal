@@ -1,0 +1,27 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Oct 10, 2018, 8:31:21 AM
+    Author     : STR7COB
+*/
+
+
+@font-face {
+  font-family: Boschsansbold;
+  src: url(fonts/BoschSans-Bold_0.woff);
+}
+@font-face {
+  font-family: Boschsansreg;
+  src: url(fonts/BOSCHSANS-REGULAR_0.woff);
+}
+@font-face {
+  font-family: Boschsanslight;
+  src: url(fonts/BoschSans-Light_0.woff);
+}
+@font-face {
+  font-family: Boschsansmed;
+  src: url(fonts/BoschSans-Medium_0.woff);
+}

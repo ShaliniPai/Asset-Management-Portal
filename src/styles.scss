@@ -1,0 +1,237 @@
+/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+$font-path: "../node_modules/@inst-iot/bosch-angular-ui-components/assets/";
+$rb-extended-breakpoints: false; // whether to use extended breakpoints xxl and xxxl
+@import "~@inst-iot/bosch-angular-ui-components/styles/global.scss";
+
+/*-------------------------------------------
+Css Vairable declaration*/
+$bodyMax_width: 1440px;
+$body_Padding: 15px 15px 1px 25px;
+
+///.. End variable declaration
+
+/*---------------------------------------
+Css start here*/
+html,
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 14px;
+  background-color: #f5f5f5;
+  height: 100%;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 500;
+}
+h1 {
+  font-size: 32px;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h3 {
+  font-size: 18.72px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 13.28px;
+}
+.body-pageWidth {
+  max-width: $bodyMax_width;
+  background-color: white;
+  position: relative !important;
+}
+.bup-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  position: block;
+  z-index: 1;
+  /* align-items: center; */
+}
+.topStrip-img {
+  max-width: $bodyMax_width;
+  position: absolute;
+  height: 12px;
+}
+.default-padding {
+  padding: $body_Padding;
+}
+
+.layout-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex {
+  flex: auto 1;
+}
+
+.full-wh {
+  width: 100%;
+  height: 100%;
+}
+.full-height {
+  height: 100%;
+}
+.full-width {
+  width: 100%;
+}
+
+.default-btn-save {
+  border: 1.5px solid #005691 !important;
+  color: #005691 !important;
+  font-weight: 500;
+  //border-radius: 0 !important;
+}
+
+/*
+--- Wiget header colors
+*/
+
+.header-active {
+  background-image: linear-gradient(to right, #24b2b1, #82c341) !important;
+}
+
+.header-idle {
+  background-image: linear-gradient(to right, #c08511, #f9ad17) !important;
+}
+.header-shutdown {
+  background-image: linear-gradient(to right, #a47cfb, #460dc1) !important;
+}
+.header-plandt {
+  background-image: linear-gradient(to right, #a47cfb, #460dc1) !important;
+}
+
+.header-slow {
+  // background-image: linear-gradient(to right, #e97664, #FBD786) !important
+  background-image: linear-gradient(to right, #e97664, #f5bac4) !important;
+}
+
+// .header-off{
+//   // background-image: linear-gradient(to right, #6b7580 , #aeb4b9) !important;
+//   background-image: linear-gradient(to right,#ff2929,#ad1717)!important;
+// }
+
+.header-inActive,
+.header-off,
+.header-down {
+  // background-image: linear-gradient(to right, #e21f35 , #c12182);
+  background-image: linear-gradient(to right, #ff2929, #ad1717) !important;
+}
+
+.header-training,
+.header-error {
+  background-image: linear-gradient(to right, #6b7580, #aeb4b9) !important;
+}
+.window-label {
+  padding: 0px 15px;
+  margin: 10px 0;
+  font-weight: 400;
+  color: lightslategray;
+}
+
+.report-Fonts table tr td {
+  font-size: 21px;
+  line-height: 20px;
+  // font-family: bosch;
+  border-right: 1px solid #eee;
+  // border-bottom: 1px solid white;
+  text-align: center;
+  padding-top: 15px;
+  width: 20%;
+  max-width: 90px;
+  min-width: 80px;
+  white-space: nowrap;
+  border-top: none;
+}
+
+.snackbar-success {
+  background-color: rgb(3, 128, 3) !important;
+  color: white !important;
+}
+
+.report-Fonts td > span {
+  font-size: 11px !important;
+  color: #525f6b !important;
+  font-weight: bold !important;
+  white-space: nowrap;
+}
+.text-inside-grid {
+  position: absolute;
+  left: 5px;
+  float: right;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.clock-img {
+  width: 19px;
+  margin-top: -3px;
+  opacity: 0.5;
+}
+
+/*...End*/
+
+label {
+  font-weight: 400;
+}
+
+/***
+
+nav tab align ment
+*/
+
+.custom-styles .mat-tab-link {
+  opacity: 1 !important;
+  min-width: auto !important;
+  padding: 0 5px !important;
+  margin: 0 0px -2px 15px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.5px !important;
+  text-decoration: none !important;
+}
+.custom-styles .mat-tab-label-active {
+  color: #005691 !important;
+  opacity: 1 !important;
+  // font-family: Boschsansmed;
+}
+
+.custom-styles .mat-menu-content {
+  width: 150px !important;
+}
+::ng-deep .mat-ink-bar {
+  background-color: #005691 !important;
+  height: 25px !important;
+}
+.default-header {
+  font-size: 18px;
+  font-weight: 400;
+  padding: 25px 0 15px 0;
+  margin: 0;
+}
+
+.rb-border-only {
+  background: transparent !important;
+  color: #005691;
+  font-size: 14px;
+  border: 1.6px solid;
+}
+
+.default-btn-border {
+  border-radius: 0 !important;
+  color: #005691;
+  border-color: #005691 !important;
+}

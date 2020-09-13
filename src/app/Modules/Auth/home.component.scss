@@ -1,0 +1,22 @@
+.login-align {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.login-bg-image {
+  background-image: url('/assets/Images/Images/Login_bg_new.jpg');
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100%;
+}
+
+.login-rb-stripLine {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}

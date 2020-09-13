@@ -1,0 +1,52 @@
+ <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> -->
+  
+  <div class="wrapper fadeInDown">
+    <div class="boschup-head">
+      <b>PHANTOM</b><br>
+      <span class="font-light italic">Connected Elevator</span>
+    </div>
+    <div id="formContent">
+      <!-- Tabs Titles -->
+  
+      <!-- Icon -->
+      <div class="fadeIn first">
+        
+        <!-- <img src="../../assets/img/Bosch-logo.png" style="height:75px;width:100px;float-right:1000px"> -->
+        <h3>Login</h3>
+      </div>
+  
+      <!-- Login Form -->
+      <form #login11="ngForm" (ngSubmit)="login(login11)">
+        
+        <div  [class.has-error]="emailControl.invalid && emailControl.touched" [class.val-error-email]="emailControl.invalid && emailControl.touched" class="form-group">
+          <div class="email-div">
+            <span _ngcontent-c2="" class="input-group-addon icon" [class.icon]="emailControl.invalid && emailControl.touched"><i _ngcontent-c2="" class="fa fa-user text-primary "></i></span>
+            <input type="text" id="signin-email" class="fadeIn second" name="emailId" placeholder="Email ID or User ID" required [(ngModel)]="emailId" #emailControl="ngModel">
+            <!-- validation error message for emailId -->
+            <br><span class="help-block val-error-msg1" *ngIf="emailControl.invalid && emailControl.touched">* Email ID or User ID is required</span>
+         </div>
+        </div>
+
+        <div class="form-group" [class.has-error]="passControl.invalid && passControl.touched" [class.val-error-pass]="passControl.invalid && passControl.touched">
+          <div class="pass-div">
+            <span _ngcontent-c2="" class="input-group-addon" [class.icon]="passControl.invalid && passControl.touched"><i _ngcontent-c2="" class="fa fa-lock text-primary"></i></span>
+            <input type="password" id="signin-pass" class="fadeIn third form-control" name="password" placeholder="Password"  required [(ngModel)]="password" #passControl="ngModel">
+            <!-- validation error message for password -->
+            <br><span class="help-block val-error-msg2" *ngIf="passControl.invalid && passControl.touched">* Password is required</span>
+          </div>
+        </div>
+        
+        <!-- Remind Passowrd -->
+        <div id="formFooter">
+          <a (click)="onclick_RedirectTOForgotPassowrd()" class="">I forgot my password</a>
+        </div>
+
+        <div class="content login-btn">
+            <button type="submit" class="rb-btn loginbtn fadeIn ">Sign in</button>
+        </div>
+        <div class="login-error-msg">
+          {{credMessage}}
+        </div>
+      </form>  
+    </div>
+  </div>

@@ -1,0 +1,484 @@
+<br>
+<div class="user0">
+    <div *ngIf="childmessage == undefined">
+        <div style="margin: 1px 20px !important;" class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <button routerLink="/home/corp/asset" class="rb-btn rb-primary bt" name="returnButton">Return to
+                        Existing Assets</button>
+
+                </div>
+            </div>
+        </div>
+
+        <hr class="hr" />
+
+        <div class="container-fluid parent-panel">
+            <form #form="ngForm" [formGroup]="fg">
+                <div class="row" style="margin:-15px 0 5px 0;">
+                    <div class="col-lg-2" style="margin-top: 9px; padding-left: 38px;">
+                        <span class="title">Add New Asset </span>
+                    </div>
+                    <mat-form-field [appearance]="'none'" style="width: 275px;height: 40px;font-family: boschsanslight; font-size: 16px;padding-left: 13px;border: 1px solid #d1d1d1;margin-top:4px;">
+                        <mat-select [formControlName]="'copyAssetDetails'"
+                        (selectionChange)="getExistingAsset(fg.controls.copyAssetDetails.value)">
+                            <mat-option value='0'>Copy fields from existing asset</mat-option>
+                            <mat-option *ngFor="let asset of assetList" [value]="asset.assetId">{{asset.assetName}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </form>
+            
+            <div class="container-fluid margin-container">
+                <!-- main container -->
+                <form #form="ngForm" [formGroup]="assetGroup" (ngSubmit)="validateForm()">
+                    <div class="row">
+                        <!-- left panel -->
+                        <div class="col-md-6 left-panel" style="padding: 5px 0;">
+                            <div class="left-pan-boxed">
+                                <div class="basic-info">
+
+                                    <div class="form-group row set-top-margin" style="margin-bottom:10px">
+                                        <label for="inputEntityName" class="col-sm-5 col-form-label cu-lable">Asset
+                                            Name:*</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control cu-input" [formControlName]="'assetName'" placeholder="Asset Name">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="inputEntityName" class="col-sm-5 col-form-label cu-lable">Asset
+                                            Type:*</label>
+                                        <div class="col-sm-6">
+                                            <mat-select class="form-control cu-input"
+                                                [formControlName]="'assetType'">
+                                                <mat-option value="Elevator">Elevator</mat-option>
+                                                <mat-option value="Escalator">Escalator</mat-option>
+                                            </mat-select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="inputEntityName" class="col-sm-3 col-form-label cu-lable">Bottom
+                                            Floor:*</label>
+                                        <div class="col-sm-3">
+                                            <input type="number" min="-5" value="-5" max="1"
+                                                class="form-control cu-input" [formControlName]="'bottomFloor'">
+                                        </div>
+
+                                        <label for="inputEntityName" class="col-sm-3 col-form-label cu-lable">Top
+                                            Floor:*</label>
+                                        <div class="col-sm-3">
+                                            <input type="number" min="0" class="form-control cu-input" [formControlName]="'topFloor'" name="topFloor">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="inputEntityName"
+                                            class="col-sm-3 col-form-label cu-lable">Site:*</label>
+                                        <div class="col-sm-4">
+                                            <mat-select class="form-control cu-input" [class.wingNotSelected]="assetGroup.controls.siteName.value === '0'" [formControlName]="'siteName'" name="site" (selectionChange)="getBlock(assetGroup.controls.siteName.value)">
+                                                <mat-option value='0' disabled>Select Site name</mat-option>
+                                                <mat-option *ngFor="let site of siteList" [value]='site.locId'>
+                                                    {{site.siteName}}</mat-option>
+                                            </mat-select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="inputEntityName" class="col-sm-3 col-form-label cu-lable">Wing /
+                                            Block*</label>
+                                        <div class="col-sm-4">
+                                            <mat-select class="form-control cu-input" [class.wingNotSelected]="assetGroup.controls.wingBlock.value === '0'" [formControlName]="'wingBlock'" name="wingBlock">
+                                                <mat-option value="0" disabled>Select Wing/ Block</mat-option>
+                                                <mat-option *ngFor="let blockId of blockList" [value]="blockId.bname">
+                                                    {{blockId.bname}}</mat-option>
+                                            </mat-select>
+                                        </div>
+                                        <div class="add-wing-btn-div col-lg-3">
+                                            <div class="submit-button" *ngIf="this.isButtonVisible"
+                                                (click)="this.isButtonVisible = false">
+                                                <input value="Add Wing / Block" type="Submit">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5" *ngIf="!this.isButtonVisible"
+                                            style="display: inline-flex;">
+                                            <input matInput type="text" class="cu-input" placeholder="New Wing/Block"
+                                                [formControlName]="'newWingBlock'" name="newWingBlock">
+                                            <div class="undo-save">
+                                                <span><button (click)="this.isButtonVisible = true"><em
+                                                            class="fa fa-undo"></em></button></span>
+                                                <span><a (click)="addWnigBlock(newWingBlock)"><em class="fa fa-save"></em></a></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <hr class="hr" style="margin-top: -5px;">
+
+                                <div class="basic-info">
+                                    <div class="form-group row set-top-margin">
+                                        <label for="inputEntityName"
+                                            class="col-sm-5 col-form-label cu-lable">Description of asset:</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control cu-input"
+                                                placeholder="Description of asset" [formControlName]="'assetDescription'"
+                                                name="assetDescription">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="inputEntityName" class="col-sm-5 col-form-label cu-lable">OEM's
+                                            Name:</label>
+                                        <div class="col-sm-6">
+                                            <mat-select class="form-control cu-input" [formControlName]="'selectOEM'"
+                                                name="selectOEM" (click)="hideOtherOemName(assetGroup.controls.selectOEM.value)">
+                                                <mat-option value="0" disabled>Select OEM Name</mat-option>
+                                                <mat-option *ngFor="let oemName of oemNameList" [value]="oemName.oemName">{{oemName.oemName}}</mat-option>
+                                            </mat-select>
+                                        </div>
+                                    </div>
+
+                                    <!-- hidden field -->
+                                    <div class="form-group row" style="width:50%; margin-left:152px">
+                                        <label for="inputEntityName" class="col-sm-5 col-form-label cu-lable"></label>
+                                        <div class="submit-button" *ngIf="this.isOEMButtonVisible"
+                                            (click)="this.isOEMButtonVisible = false">
+                                            <input value="Add OEM Name" type="Submit">
+                                        </div>
+                                        <div class="col-md-5" *ngIf="!this.isOEMButtonVisible"
+                                            style="display: inline-flex;">
+                                            <input matInput type="text" class="cu-input" placeholder="New OEM Name"
+                                                [formControlName]="'otherOemName'">
+                                            <div class="undo-save">
+                                                <span><button (click)="this.isOEMButtonVisible = true"><em
+                                                            class="fa fa-undo"></em></button></span>
+                                                <span><a (click)="addOemName()"><em class="fa fa-save"></em></a></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+
+                                    <div class="form-group row">
+                                        <label for="inputEntityName" class="col-sm-5 col-form-label cu-lable">OEM Model
+                                            Name:</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control cu-input" placeholder="Enter OEM Model Name"
+                                                [formControlName]="'oemModelName'" name="oemModelName">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- /left panel -->
+
+                        <!-- right panel -->
+                        <div class="col-md-6 right-pannel">
+                            <div class="right-panel-top">
+                                <div class="basic-info">
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <span class="title">Operating Hours* </span>
+                                        </div>
+                                        <div class="form-check use-site-checkbox">
+                                            <mat-checkbox class="form-check-input" id="exampleCheck1"
+                                             [formControlName]="'checkSiteOppHrs'" (click)="siteOpHours()">
+                                            </mat-checkbox>
+                                            <label class="form-check-label" for="exampleCheck1">Use 'Site' Operating
+                                                Hours</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <mat-select class="form-control cu-input" [formControlName]="'selectDays'"
+                                                name="selectDays">
+                                                <mat-option value="0" disabled>Select Days</mat-option>
+                                                <mat-option value="Weekdays">Weekdays</mat-option>
+                                                <mat-option value="Weekend">Weekend</mat-option>
+                                            </mat-select>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="assetGroup.controls.selectDays.value === 'Weekdays'">
+                                        <div class="form-check" id="weekdays">
+                                            <label class="checkbox-inline">
+                                                <mat-checkbox [formControlName]="'monday'" [disabled]='assetGroup.controls.checkSiteOppHrs.value'>
+                                                    Monday
+                                                </mat-checkbox>
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <mat-checkbox [formControlName]="'tuesday'" [disabled]='assetGroup.controls.checkSiteOppHrs.value'>
+                                                    Tuesday
+                                                </mat-checkbox>
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <mat-checkbox [formControlName]="'wednesday'" [disabled]='assetGroup.controls.checkSiteOppHrs.value'>
+                                                    Wednesday
+                                                </mat-checkbox>
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <mat-checkbox [formControlName]="'thrusday'" [disabled]='assetGroup.controls.checkSiteOppHrs.value'>
+                                                    Thrusday
+                                                </mat-checkbox>
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <mat-checkbox [formControlName]="'friday'" [disabled]='assetGroup.controls.checkSiteOppHrs.value'>
+                                                    Friday
+                                                </mat-checkbox>
+                                            </label>
+                                        </div>
+                                        <div class="form-check" style="margin-top: -20px;" id="weekend">
+                                            <label class="checkbox-inline">
+                                                <mat-checkbox [formControlName]="'saturday'" [disabled]="assetGroup.controls.checkSiteOppHrs.value">
+                                                    Saturday
+                                                </mat-checkbox>
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <mat-checkbox [formControlName]="'sunday'" [disabled]="assetGroup.controls.checkSiteOppHrs.value">
+                                                    Sunday
+                                                </mat-checkbox>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="assetGroup.controls.selectDays.value === 'Weekend'">
+                                        <div class="form-check" id="weekdays">
+                                            <label class="checkbox-inline">
+                                                <mat-checkbox [formControlName]="'weekendMonday'" [disabled]='assetGroup.controls.checkSiteOppHrs.value'>
+                                                    Monday
+                                                </mat-checkbox>
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <mat-checkbox [formControlName]="'weekendTuesday'" [disabled]='assetGroup.controls.checkSiteOppHrs.value'>
+                                                    Tuesday
+                                                </mat-checkbox>
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <mat-checkbox [formControlName]="'weekendWednesday'" [disabled]='assetGroup.controls.checkSiteOppHrs.value'>
+                                                    Wednesday
+                                                </mat-checkbox>
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <mat-checkbox [formControlName]="'weekendThrusday'" [disabled]='assetGroup.controls.checkSiteOppHrs.value'>
+                                                    Thrusday
+                                                </mat-checkbox>
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <mat-checkbox [formControlName]="'weekendFriday'" [disabled]='assetGroup.controls.checkSiteOppHrs.value'>
+                                                    Friday
+                                                </mat-checkbox>
+                                            </label>
+                                        </div>
+                                        <div class="form-check" style="margin-top: -20px;" id="weekend">
+                                            <label class="checkbox-inline">
+                                                <mat-checkbox [formControlName]="'weekendSaturday'" [disabled]="assetGroup.controls.checkSiteOppHrs.value">
+                                                    Saturday
+                                                </mat-checkbox>
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <mat-checkbox [formControlName]="'weekendSunday'" [disabled]="assetGroup.controls.checkSiteOppHrs.value">
+                                                    Sunday
+                                                </mat-checkbox>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <!-------------------------------- For weekdays---------------------------------->
+                                    <div class="form-group row" style="margin:25px 0 0 0;" *ngIf="assetGroup.controls.selectDays.value=='Weekdays'">
+                                        <label for="inputEntityName" class="col-sm-1 col-form-label cu-lable">From:*
+                                        </label>
+                                        <div class="col-sm-2" style="margin-right: -30px; margin-left: 10px;">
+                                            <input *ngIf="assetGroup.controls.checkSiteOppHrs.value === false" type="number" min="1" max="12" class="form-control cu-input" style="padding-left: 2px;" [formControlName]="'weekdaysFromHours'"
+                                             required>
+                                            <input *ngIf="assetGroup.controls.checkSiteOppHrs.value === true" type="number" min="1" max="12" class="form-control cu-input" style="padding-left: 2px;"  
+                                            [formControlName]="'weekdaysFromHours'" disabled>
+                                        </div>
+                                        <div class="col-sm-2" style="margin-right: -30px;">
+                                            <input *ngIf="assetGroup.controls.checkSiteOppHrs.value === false" type="number" min="0" max="60" class="form-control cu-input" style="padding-left: 2px;" [formControlName]="'weekdaysFromMins'" required>
+                                            <input *ngIf="assetGroup.controls.checkSiteOppHrs.value === true" type="number" min="0" max="60" class="form-control cu-input" style="padding-left: 2px;" [formControlName]="'weekdaysFromMins'" disabled>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <mat-select *ngIf="assetGroup.controls.checkSiteOppHrs.value === false" class="form-control cu-input" style="padding-left: 2px;"
+                                                [formControlName]="'selectFromAmPm'" required>
+                                                <mat-option value="AM">AM</mat-option>
+                                                <mat-option value="PM">PM</mat-option>
+                                            </mat-select>
+                                            <mat-select *ngIf="assetGroup.controls.checkSiteOppHrs.value === true" class="form-control cu-input" style="padding-left: 2px;"
+                                                [formControlName]="'selectFromAmPm'" required disabled>
+                                                <mat-option value="AM">AM</mat-option>
+                                                <mat-option value="PM">PM</mat-option>
+                                            </mat-select>
+                                        </div>
+
+                                        <label for="inputEntityName"
+                                            class="col-sm-1 col-form-label cu-lable">To:*</label>
+                                        <div class="col-sm-2" style="margin-right: -30px; margin-left: -10px;">
+                                            <input *ngIf="assetGroup.controls.checkSiteOppHrs.value === false" type="number" max="60" min="0" class="form-control cu-input" style="padding-left: 2px;" [formControlName]="'weekdaysToHours'" required>
+                                            <input *ngIf="assetGroup.controls.checkSiteOppHrs.value === true" type="number" max="60" min="0" class="form-control cu-input" style="padding-left: 2px;" [formControlName]="'weekdaysToHours'" disabled>
+                                        </div>
+                                        <div class="col-sm-2" style="margin-right: -30px;">
+                                            <input *ngIf="assetGroup.controls.checkSiteOppHrs.value === false" type="number" max="60" min="0" class="form-control cu-input" style="padding-left: 2px;" [formControlName]="'weekdaysToMins'" required>
+                                            <input *ngIf="assetGroup.controls.checkSiteOppHrs.value === true" type="number" max="60" min="0" class="form-control cu-input" style="padding-left: 2px;" [formControlName]="'weekdaysToMins'" disabled>
+                                        </div>
+                                        <div class="col-sm-2" style="margin-right: -30px;">
+                                            <mat-select *ngIf="assetGroup.controls.checkSiteOppHrs.value === false" class="form-control cu-input" style="padding-left: 2px;"
+                                                [formControlName]="'selectToAmPm'" required>
+                                                <mat-option value="AM">AM</mat-option>
+                                                <mat-option value="PM">PM</mat-option>
+                                            </mat-select>
+                                            <mat-select *ngIf="assetGroup.controls.checkSiteOppHrs.value === true" class="form-control cu-input" style="padding-left: 2px;"
+                                                [formControlName]="'selectToAmPm'" disabled>
+                                                <mat-option value="AM">AM</mat-option>
+                                                <mat-option value="PM">PM</mat-option>
+                                            </mat-select>
+                                        </div>
+                                    </div>
+                                    <!-------------------------------- weekdays Ends---------------------------------->
+
+                                    <!-------------------------------- For WeekEnds---------------------------------->
+                                    <div class="form-group row" style="margin:25px 0 0 0;" *ngIf="assetGroup.controls.selectDays.value === 'Weekend'">
+                                        <label for="inputEntityName" class="col-sm-1 col-form-label cu-lable">From:*
+                                        </label>
+                                        <div class="col-sm-2" style="margin-right: -30px; margin-left: 10px;">
+                                            <input *ngIf="assetGroup.controls.checkSiteOppHrs.value === false" type="number" min="1" max="12" class="form-control cu-input" style="padding-left: 2px;" [formControlName]="'weekendFromHours'" required>
+                                            <input *ngIf="assetGroup.controls.checkSiteOppHrs.value === true" type="number" min="1" max="12" class="form-control cu-input" style="padding-left: 2px;" [formControlName]="'weekendFromHours'" disabled>
+                                        </div>
+                                        <div class="col-sm-2" style="margin-right: -30px;">
+                                            <input *ngIf="assetGroup.controls.checkSiteOppHrs.value === false" type="number" min="0" max="60" class="form-control cu-input" style="padding-left: 2px;" [formControlName]="'weekendFromMins'" required>
+                                            <input *ngIf="assetGroup.controls.checkSiteOppHrs.value === true" type="number" min="0" max="60" class="form-control cu-input" style="padding-left: 2px;" [formControlName]="'weekendFromMins'" disabled>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <mat-select *ngIf="assetGroup.controls.checkSiteOppHrs.value === false" class="form-control cu-input" style="padding-left: 2px;"
+                                                [formControlName]="'weekendSelectFromAmPm'" required>
+                                                <mat-option value='AM'>AM</mat-option>
+                                                <mat-option value='PM'>PM</mat-option>
+                                            </mat-select>
+                                            <mat-select *ngIf="assetGroup.controls.checkSiteOppHrs.value === true" class="form-control cu-input" style="padding-left: 2px;"
+                                                [formControlName]="'weekendSelectFromAmPm'" required disabled>
+                                                <mat-option value='AM'>AM</mat-option>
+                                                <mat-option value='PM'>PM</mat-option>
+                                            </mat-select>
+                                        </div>
+
+                                        <label for="inputEntityName"
+                                            class="col-sm-1 col-form-label cu-lable">To:*</label>
+                                        <div class="col-sm-2" style="margin-right: -30px; margin-left: -10px;">
+                                            <input *ngIf="assetGroup.controls.checkSiteOppHrs.value === false" type="number" max="12" min="1" class="form-control cu-input" style="padding-left: 2px;" [formControlName]="'weekendToHours'" required>
+                                            <input *ngIf="assetGroup.controls.checkSiteOppHrs.value === true" type="number" max="12" min="1" class="form-control cu-input" style="padding-left: 2px;" [formControlName]="'weekendToHours'" disabled>
+                                        </div>
+                                        <div class="col-sm-2" style="margin-right: -30px;">
+                                            <input *ngIf="assetGroup.controls.checkSiteOppHrs.value === false" type="number" max="60" min="0" class="form-control cu-input" style="padding-left: 2px;" [formControlName]="'weekendToMins'" required>
+                                            <input *ngIf="assetGroup.controls.checkSiteOppHrs.value === true" type="number" max="60" min="0" class="form-control cu-input" style="padding-left: 2px;" [formControlName]="'weekendToMins'" disabled>
+                                        </div>
+                                        <div class="col-sm-2" style="margin-right: -30px;">
+                                            <mat-select *ngIf="assetGroup.controls.checkSiteOppHrs.value === false" class="form-control cu-input" style="padding-left: 2px;"
+                                                [formControlName]="'weekendSelectToAmPm'">
+                                                <mat-option value='AM'>AM</mat-option>
+                                                <mat-option value='PM'>PM</mat-option>
+                                            </mat-select>
+                                            <mat-select *ngIf="assetGroup.controls.checkSiteOppHrs.value === true" class="form-control cu-input" style="padding-left: 2px;"
+                                                [formControlName]="'weekendSelectToAmPm'" disabled>
+                                                <mat-option value='AM'>AM</mat-option>
+                                                <mat-option value='PM'>PM</mat-option>
+                                            </mat-select>
+                                        </div>
+                                    </div>
+
+                                    <!------------------------------------ Weekend Ends------------------------------------>
+
+                                </div>
+                            </div>
+
+                            <!-- right-bottom -->
+                            <div class="right-panel-bottom">
+                                <div class="basic-info">
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <span class="title">Preventive Maintenance </span>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="form-group row">
+                                        <label for="inputEntityName"
+                                            class="col-sm-5 col-form-label cu-lable">Criterion</label>
+                                        <div class="col-sm-6">
+                                            <mat-select class="form-control cu-input" [formControlName]="'selectCriterion'">
+                                                <mat-option value="0">Select Criteria</mat-option>
+                                                <mat-option value="Fixed Frequency">Fixed Frequency</mat-option>
+                                                <mat-option value="By Usage - No. of trips">By Usage - No. of trips</mat-option>
+                                                <mat-option value="By Usage - Active time">By Usage - Active time</mat-option>
+                                            </mat-select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="inputEntityName" class="col-sm-5 col-form-label cu-lable"></label>
+                                        <div class="col-sm-6">
+                                            <div class="col-sm-6 misc-input-1">
+                                                <input type="number" class="form-control cu-input" id="inputEntityName"
+                                                    placeholder="Enter" [formControlName]="'unitValue'" name="trips">
+                                                <p *ngIf="assetGroup.controls.selectCriterion.value === 'By Usage - No. of trips'">trips</p>
+                                            </div>
+
+                                            <!-- days and months -->
+                                            <div class="col-sm-6" *ngIf="assetGroup.controls.selectCriterion.value === 'Fixed Frequency'">
+                                                <mat-select class="form-control cu-input" [formControlName]="'selectUnits'">
+                                                    <mat-option value="0">Select Units</mat-option>
+                                                    <mat-option value="Days">Days</mat-option>
+                                                    <mat-option value="Months">Months</mat-option>
+                                                </mat-select>
+                                            </div>
+
+                                            <!-- mins and hours -->
+                                            <div class="col-sm-6" *ngIf="assetGroup.controls.selectCriterion.value ==='By Usage - Active time'">
+                                                <mat-select class="form-control cu-input" id="exampleFormControlSelect1"
+                                                    [formControlName]="'selectUnits'">
+                                                    <mat-option value="0">Select Units</mat-option>
+                                                    <mat-option value="Mins">Mins</mat-option>
+                                                    <mat-option value="Hours">Hours</mat-option>
+                                                </mat-select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group row" style="margin-bottom: -15px;">
+                                        <label for="inputEntityName" class="col-sm-5 col-form-label cu-lable">Next /
+                                            Last PM Date </label>
+                                        <div class="col-sm-6">
+                                            <mat-form-field style="width: 94%;font-size: 18px;bottom: 18px">
+                                                <input matInput [matDatepicker]="picker" [formControlName]="'date'"
+                                                    name="date">
+                                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /right-pannel -->
+                        <!-- submit button -->
+                        <div class="submit-btn-div pull-right">
+                            <div class="submit-button">
+                                <input value="Submit" type="Submit">
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

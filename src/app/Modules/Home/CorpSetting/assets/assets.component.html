@@ -1,0 +1,221 @@
+<br>
+<div class="user0">
+  <div>
+    <div style="margin: 1px 20px !important;" class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <button routerLink="/home/corp/asset/addAsset" class="rb-btn rb-primary bt">Add New Asset</button>
+        </div>
+      </div>
+    </div>
+    <hr class="hr" />
+    <div style="margin: 1px 20px !important;" class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+          <span class="title">Existing Assets</span>
+
+          <select style="padding: 10px 25px 10px 4px !important;text-align: left"
+            class="font-regular pull-right SelectSort" (change)="sortAsset($event)">
+            <option value="assteType">Sort: Asset Type</option>
+            <option value="assetName">Sort: Asset Name</option>
+            <option value="assetState">Sort: Asset State</option>
+          </select>
+
+        </div>
+
+      </div>
+      <br>
+
+      <!-- --------------------table starts------------------- -->
+      <div class="user-list">
+        <form [formGroup]="profileForm">
+          <table mat-table [dataSource]="assets" class="mat-elevation-z8">
+
+            <!-- S.no Column -->
+
+            <ng-container matColumnDef="sno">
+              <th mat-header-cell *matHeaderCellDef style="width: 80px;"> S.No. </th>
+              <td mat-cell *matCellDef="let row;let i=index;" style="padding-right: 10px;"> {{i+1}}
+              </td>
+            </ng-container>
+
+            <!-- Asset Name Column -->
+            <ng-container matColumnDef="assetName">
+              <th mat-header-cell *matHeaderCellDef style="width: 170px;"> Asset Name </th>
+              <td mat-cell *matCellDef="let row,let i=index;"> {{row.assetName}}
+                <br>
+                <!-- <div *ngIf="(editRow)&&(editIndex==i)"><input type="text" [value]="row.lastName" class="edit-input" formControlName="u1_lastName" [(ngModel)]="row.lastName" required>
+                </div> -->
+              </td>
+            </ng-container>
+
+            <!-- Type Column -->
+            <ng-container matColumnDef="type">
+              <th mat-header-cell *matHeaderCellDef style="width: 135px;"> Type <button mat-icon-button [matMenuTriggerFor]="MenuAssetTypeFilter">
+                <img style="width: 19px;" alt="Site Filter" src="../../../../../assets/Images/Icons/{{onImageFitler('assetType')}}.PNG">
+              </button> </th>
+              <td mat-cell *matCellDef="let row,let i=index;"> {{row.assetCategory}}
+              </td>
+            </ng-container>
+
+            <!-- Asset State Column -->
+            <ng-container matColumnDef="assetState">
+              <th mat-header-cell *matHeaderCellDef style="width: 125px;"> Asset State <button mat-icon-button [matMenuTriggerFor]="MenuAssetStateFilter">
+                <img style="width: 19px;" alt="Site Filter" src="../../../../../assets/Images/Icons/{{onImageFitler('assetState')}}.PNG">
+              </button></th>
+              <td mat-cell *matCellDef="let row,let i=index;"> {{row.status}}
+                <br>
+
+              </td>
+            </ng-container>
+
+            <!-- Sensor HW ID -->
+            <ng-container matColumnDef="sensorHwId">
+              <th mat-header-cell *matHeaderCellDef style="width: 200px;"> Sensor HW ID </th>
+              <td mat-cell *matCellDef="let row,let i=index;">
+                <div *ngIf="!editRow">
+                  {{row.devices[0].devId}}
+                  <img class="trash ico2 i" alt="delete-icon" style="float: right;margin-right: 30px;"
+                    (click)="onEdit(i, row)" src="../../../../../../assets/Images/Icons/edit.svg" *ngIf="row.devices[0].devId==''">
+                  <br>
+                </div>
+
+                <div *ngIf="(editRow)&&(editIndex==i)">
+                  <div *ngIf="(editRow)&&(editIndex==i)"><input type="text" class="edit-input hw-sensor-id" formControlName="sensorHwId">
+                    <span>
+                      <img class="trash i" alt="delete-icon" style="float:right;margin-right: 0px;margin-top: 20px;"
+                        (click)="onUpdate(i, row)" src="../../../../../../assets/Images/Icons/bosch-ic-save.svg">
+                    </span>
+                    <span>
+                      <img class="trash i" alt="delete-icon" style="float:right;margin-right: 0px;margin-top: 20px;"
+                        (click)="onUndo(i, row)" src="../../../../../../assets/Images/Icons/bosch-ic-undo.svg">
+                    </span> 
+                  </div>
+                  <br>
+                </div>
+              </td>
+            </ng-container>
+
+            <!-- Site Column -->
+            <ng-container matColumnDef="site">
+              <th mat-header-cell *matHeaderCellDef style="width: 140px;"> Site <button mat-icon-button [matMenuTriggerFor]="MenuSiteFilter">
+                  <img style="width: 19px;" alt="Site Filter" src="../../../../../assets/Images/Icons/{{onImageFitler('siteName')}}.PNG">
+                </button>
+              </th>
+              <td mat-cell *matCellDef="let row,let i=index;"style="padding-right: 10px;"> {{row.siteName}}
+                <br>
+              </td>
+            </ng-container>
+
+            <!-- Wing/Block Column -->
+            <ng-container matColumnDef="wingBlock">
+              <th mat-header-cell id="block" *matHeaderCellDef style="width: 160px;"> Wing/Block <button mat-icon-button [matMenuTriggerFor]="MenuBlockFilter">
+                <img style="width: 19px;" alt="Site Filter" src="../../../../../assets/Images/Icons/{{onImageFitler('zone')}}.PNG">
+              </button></th>
+              <td mat-cell *matCellDef="let row,let i=index;" style="padding-left: 10px;"> {{row.bname}}
+              </td>
+            </ng-container>
+
+            <!-- Next PM Column -->
+            <ng-container matColumnDef="nextPm">
+              <th mat-header-cell *matHeaderCellDef style="width: 200px;"> Next PM </th>
+              <td mat-cell *matCellDef="let row,let i=index;"> {{row.maintDt}}
+              </td>
+            </ng-container>
+
+            <!-- View Column -->
+            <ng-container matColumnDef="view">
+              <th mat-header-cell *matHeaderCellDef class="header-style" scope="col" style="">&nbsp;</th>
+              <td mat-cell *matCellDef="let row,let i=index;">
+                <div *ngIf="!editRow">
+                  <button class="rb-btn bt-d view-btn" (click)="viewAsset(row)">View</button>
+                </div>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </form>
+      </div>
+
+      <div *ngIf="ConfirmDeletion" style="margin-left:4px">
+        <br>
+        <button (click)="ConfirmDelete()" style="float: right !important;margin: 1px 0px;"
+          class="rb-btn rb-primary bt pull-right getRightDelBtn">Confirm Deletion</button>
+        <button (click)="Cancel()" style="float: right !important;margin: 1px 7px;"
+          class="rb-btn bt bt-d pull-right">Cancel</button>
+      </div>
+
+
+
+
+    </div>
+  </div>
+</div>
+
+<!-- --------------------- Menu - FITLER -SITE NAME ----------------------->
+<mat-menu #MenuSiteFilter="matMenu">
+  <div (click)="$event.stopPropagation()">
+      <!-- Checkbox -ALL -->
+      <mat-selection-list [(ngModel)]="allSiteFilter" color="primary" ngDefaultControl
+          (selectionChange)="onFilterSelectAll('siteName')">
+          <mat-list-option [value]="'all'">All</mat-list-option>
+      </mat-selection-list>
+      <mat-divider></mat-divider>
+      <!-- Checkbox -Items -->
+      <mat-selection-list [(ngModel)]="itemsSiteFilter" color="primary" ngDefaultControl (selectionChange)="onFilterChange()">
+          <mat-list-option *ngFor="let val of siteFilter" [value]="val">{{val}}</mat-list-option>
+      </mat-selection-list>
+  </div>
+</mat-menu>
+
+
+<!-- --------------------- Menu - Filter Asset Type ----------------------->
+<mat-menu #MenuAssetTypeFilter="matMenu">
+  <div (click)="$event.stopPropagation()">
+      <!-- Checkbox -ALL -->
+      <mat-selection-list [(ngModel)]="allAssetTypesFilter" ngDefaultControl color="primary"
+          (selectionChange)="onFilterSelectAll('assetType')">
+          <mat-list-option [value]="'all'">All</mat-list-option>
+      </mat-selection-list>
+      <mat-divider></mat-divider>
+      <!-- Checkbox -Items -->
+      <mat-selection-list [(ngModel)]="itemsAssetTypeFilter" ngDefaultControl color="primary" (selectionChange)="onFilterChange()">
+          <mat-list-option *ngFor="let val of assetTypesFilter" [value]="val">{{val}}</mat-list-option>
+      </mat-selection-list>
+  </div>
+</mat-menu>
+
+<!-- --------------------- Menu - Filter Asset Type ----------------------->
+<mat-menu #MenuBlockFilter="matMenu">
+  <div (click)="$event.stopPropagation()">
+      <!-- Checkbox -ALL -->
+      <mat-selection-list [(ngModel)]="allZoneFilter" ngDefaultControl color="primary"
+          (selectionChange)="onFilterSelectAll('zone')">
+          <mat-list-option [value]="'all'">All</mat-list-option>
+      </mat-selection-list>
+      <mat-divider></mat-divider>
+      <!-- Checkbox -Items -->
+      <mat-selection-list [(ngModel)]="itemsZoneFilter" ngDefaultControl color="primary" (selectionChange)="onFilterChange()">
+          <mat-list-option *ngFor="let val of zoneFilter" [value]="val">{{val}}</mat-list-option>
+      </mat-selection-list>
+  </div>
+</mat-menu>
+
+<!-- --------------------- Menu - Filter Asset Type ----------------------->
+<mat-menu #MenuAssetStateFilter="matMenu">
+  <div (click)="$event.stopPropagation()">
+      <!-- Checkbox -ALL -->
+      <mat-selection-list [(ngModel)]="allAssetStatesFilter" ngDefaultControl color="primary"
+          (selectionChange)="onFilterSelectAll('assetState')">
+          <mat-list-option [value]="'all'">All</mat-list-option>
+      </mat-selection-list>
+      <mat-divider></mat-divider>
+      <!-- Checkbox -Items -->
+      <mat-selection-list [(ngModel)]="itemsAssetStateFilter" ngDefaultControl color="primary" (selectionChange)="onFilterChange()">
+          <mat-list-option *ngFor="let val of assetStatesFilter" [value]="val">{{val}}</mat-list-option>
+      </mat-selection-list>
+  </div>
+</mat-menu>

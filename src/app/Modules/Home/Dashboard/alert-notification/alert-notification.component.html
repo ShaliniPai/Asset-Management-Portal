@@ -1,0 +1,22 @@
+<div style="display: inline-flex;flex-direction: column;height: 100%;
+width: 100%;">
+
+    <div class="layout-margin custom-styles" style="width:100%;overflow: hidden;background-color: #fff;height: 50px;">
+        <nav mat-tab-nav-bar style="overflow:hidden;padding-left:15px;">
+            <a mat-tab-link routerLinkActive [active]="lar.isActive" #lar="routerLinkActive"
+                *ngIf="$auth.$grantAccess('A') ||$auth.$grantAccess('G') ||$auth.$grantAccess('S')"
+                routerLink="/home/alertsAndNotification/notificationReceived">Notifications Received </a>
+            <a mat-tab-link routerLinkActive [active]="lam.isActive" #lam="routerLinkActive"
+                routerLink="/home/alertsAndNotification/defineEvents"
+                *ngIf="$auth.$grantAccess('A') ||$auth.$grantAccess('G') ||$auth.$grantAccess('S')">Define Events</a>
+            <a mat-tab-link routerLinkActive [active]="laa.isActive" #laa="routerLinkActive"
+                *ngIf="$auth.$grantAccess('A') ||$auth.$grantAccess('G') ||$auth.$grantAccess('S')"
+                routerLink="/home/alertsAndNotification/currentDefinedEvents">Current Defined Events</a>
+        </nav>
+    </div>
+    <div style="flex:auto 1;overflow: auto;">
+        <router-outlet></router-outlet>
+    </div>
+</div>
+
+<!-- <app-treeview-list></app-treeview-list> -->

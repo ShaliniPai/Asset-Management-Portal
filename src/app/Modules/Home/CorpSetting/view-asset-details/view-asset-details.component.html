@@ -1,0 +1,493 @@
+<br>
+<div class="user0 checking">
+    <div *ngIf="childmessage == undefined">
+        <div style="margin: 1px 20px !important;" class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <button routerLink="/home/corp/asset" class="rb-btn rb-primary bt">Return to Existing
+                        Assets</button>
+                    <button *ngIf="this.isEditable" class="rb-btn rb-primary bt pull-right"
+                        (click)="editable()">Edit</button>
+                </div>
+            </div>
+        </div>
+
+        <hr class="hr" />
+
+        <div class="container-fluid parent-panel">
+            <div class="row" style="margin:-10px 0 5px 0;">
+                <div class="col-lg-2">
+                    <span class="title">Asset: View Details </span>
+                </div>
+            </div>
+
+            <div class="container-fluid margin-container">
+                <!-- main container -->
+                <form #form="ngForm" (ngSubmit)="logForm(form.value)">
+
+                    <div class="row">
+                        <!-- left panel -->
+                        <div class="col-md-6 left-panel" style="padding: 5px 0;">
+                            <div class="left-pan-boxed">
+                                <div class="basic-info">
+
+                                    <div class="form-group row set-top-margin">
+                                        <label for="inputEntityName" class="col-sm-5 col-form-label cu-lable">Asset
+                                            Name:*</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control cu-input" id="inputAssetName"
+                                                placeholder="Asset Name" [(ngModel)]="assetDetail.assetName"
+                                                name="assetName" [disabled]="this.isEditable">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="inputEntityName" class="col-sm-5 col-form-label cu-lable">Asset
+                                            Type:*</label>
+                                        <div class="col-sm-6">
+                                            <select class="form-control cu-input" id="exampleFormControlSelect111"
+                                                [(ngModel)]="assetDetail.assetCategory" name="selectAssetCategory"
+                                                [disabled]="this.isEditable">
+                                                <option>Elevator</option>
+                                                <option>Escalator</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="inputEntityName" class="col-sm-3 col-form-label cu-lable">Bottom
+                                            Floor:*</label>
+                                        <div class="col-sm-3">
+                                            <input type="number" min="-5" value="-5" max="1"
+                                                class="form-control cu-input" id="bottomfloor"
+                                                [(ngModel)]="assetDetail.bottomFloor" name="bottomFloor"
+                                                [disabled]="this.isEditable">
+                                        </div>
+
+                                        <label for="inputEntityName" class="col-sm-3 col-form-label cu-lable">Top
+                                            Floor:*</label>
+                                        <div class="col-sm-3">
+                                            <input type="number" min="0" class="form-control cu-input"
+                                                [(ngModel)]="assetDetail.topFloor" name="topFloor"
+                                                [disabled]="this.isEditable">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="inputEntityName"
+                                            class="col-sm-3 col-form-label cu-lable">Site:*</label>
+                                        <div class="col-sm-4">
+                                            <select class="form-control cu-input" [(ngModel)]="assetDetail.locId"
+                                                name="site" [disabled]="this.isEditable"
+                                                (click)="getBlock(assetDetail.locId,1)">
+                                                <option *ngFor="let site of siteList" [value]='site.locId'>
+                                                    {{site.des}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="inputEntityName" class="col-sm-3 col-form-label cu-lable">Wing /
+                                            Block*</label>
+                                        <div class="col-sm-4">
+                                            <select class="form-control cu-input" [(ngModel)]="defaultBidForUi"
+                                                name="wingBlock" [disabled]="this.isEditable"
+                                                (change)="getBlockName(defaultBidForUi)">
+                                                <!-- [selected]="assetDetail.bname == blockId.bname" -->
+                                                <option></option>
+                                                <option *ngFor="let blockId of blockList"  [value]='blockId.bid'>
+                                                    {{blockId.bname}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="add-wing-btn-div col-lg-3">
+                                            <div class="submit-button" *ngIf="this.isButtonVisible"
+                                                (click)="this.isButtonVisible = false">
+                                                <input value="Add Wing / Block" type="Submit"
+                                                    [disabled]="this.isEditable">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5" *ngIf="!this.isButtonVisible"
+                                            style="display: inline-flex;">
+                                            <input type="text" class="form-control cu-input"
+                                                placeholder="new Wing/Block" [(ngModel)]="newWingBlock"
+                                                name="newWingBlock" [disabled]="this.isEditable">
+                                            <div class="undo-save">
+                                                <span><button (click)="this.isButtonVisible = true"><i
+                                                            class="fa fa-undo"></i></button></span>
+                                                <span><a (click)=addWnigBlock(newWingBlock)><i
+                                                            class="fa fa-save"></i></a></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <hr class="hr" style="margin-top: -5px;">
+
+                                <div class="basic-info">
+                                    <div class="form-group row set-top-margin">
+                                        <label for="inputEntityName"
+                                            class="col-sm-5 col-form-label cu-lable">Description of asset:</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control cu-input"
+                                                placeholder="Description of asset" [(ngModel)]="assetDescription"
+                                                name="assetDescription" [disabled]="this.isEditable">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="inputEntityName" class="col-sm-5 col-form-label cu-lable">OEM's
+                                            Name:</label>
+                                        <div class="col-sm-6">
+                                            <select class="form-control cu-input" [(ngModel)]="assetDetail.oemName"
+                                                (click)="hideOtherOemName(assetDetail.oemName)" name="selectOEM"
+                                                [disabled]="this.isEditable">
+                                                <option></option>
+                                                <option *ngFor="let oemName of oemNameList">{{oemName.oemName}}</option>
+                                                <!-- <option>Other</option> -->
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- hidden field -->
+                                    <div class="form-group row">
+                                        <label for="inputEntityName" class="col-sm-5 col-form-label cu-lable"></label>
+                                        <div class="add-wing-btn-div col-lg-3">
+                                            <div class="submit-button" *ngIf="this.isOemButtonVisible"
+                                                (click)="this.isOemButtonVisible = false">
+                                                <input value="Add Wing / Block" type="Submit"
+                                                    [disabled]="this.isEditable">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5" *ngIf="!this.isOemButtonVisible"
+                                            style="display: inline-flex;">
+                                            <input type="text" class="form-control cu-input"
+                                                placeholder="OEM Name" [(ngModel)]="otherOemName"
+                                                name="otherOemName" [disabled]="this.isEditable">
+                                            <div class="undo-save">
+                                                <span><button (click)="this.isOemButtonVisible = true"><i
+                                                            class="fa fa-undo"></i></button></span>
+                                                <span><a (click)=addNewOemName(otherOemName)><i
+                                                            class="fa fa-save"></i></a></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="inputEntityName" class="col-sm-5 col-form-label cu-lable">OEM Model
+                                            Name:</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control cu-input"
+                                                placeholder="OEM Model Name" [(ngModel)]="assetDetail.oemModelName"
+                                                name="oemModelName" [disabled]="this.isEditable">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- /left panel -->
+
+                        <!-- right panel -->
+                        <div class="col-md-6 right-pannel">
+                            <div class="right-panel-top">
+                                <div class="basic-info">
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <span class="title">Operating Hours* </span>
+                                        </div>
+                                        <div class="form-check use-site-checkbox">
+                                            <input type="checkbox" class="form-check-input" id="exampleCheck1"
+                                                [checked]="isChecked" [(ngModel)]="assetDetail.siteOperatingHours"
+                                                name="checkSiteOppHrs" [disabled]="this.isEditable">
+                                            <label class="form-check-label" for="exampleCheck1">Use 'Site' Operating
+                                                Hours</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <select class="form-control cu-input" [(ngModel)]="selectDays"
+                                                name="selectDays" [disabled]='this.isEditable'
+                                                (click)=changeDays(selectDays)>
+                                                <option disabled>Select Days</option>
+                                                <option>Weekdays</option>
+                                                <option>Weekend</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-check" id="weekdays">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" value="" [checked]="" [(ngModel)]="monday"
+                                                name="monday"
+                                                [disabled]='assetDetail.siteOperatingHours || this.isEditable'
+                                                (click)="pushDays(!monday,1)">Monday
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" value="" [checked]="" [(ngModel)]="tuesday"
+                                                name="tuesday"
+                                                [disabled]='assetDetail.siteOperatingHours || this.isEditable'
+                                                (click)="pushDays(!tuesday,2)">
+                                            Tuesday
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" value="" [checked]="" [(ngModel)]="wednesday"
+                                                name="wednesday"
+                                                [disabled]='assetDetail.siteOperatingHours || this.isEditable'
+                                                (click)="pushDays(!wednesday,3)">Wednesday
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" value="" [checked]="" [(ngModel)]="thrusday"
+                                                name="thrusday"
+                                                [disabled]='assetDetail.siteOperatingHours || this.isEditable'
+                                                (click)="pushDays(!thrusday,4)">Thrusday
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" value="" [checked]="" [(ngModel)]="friday"
+                                                name="friday"
+                                                [disabled]='assetDetail.siteOperatingHours || this.isEditable'
+                                                (click)="pushDays(!friday,5)">Friday
+                                        </label>
+                                    </div>
+                                    <div class="form-check" style="margin-top: -20px;" id="weekend">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" value="" [checked]="" [(ngModel)]="saturday"
+                                                name="saturday"
+                                                [disabled]="assetDetail.siteOperatingHours || this.isEditable"
+                                                (click)="pushDays(!saturday,6)">Saturday
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" value="" [checked]="" [(ngModel)]="sunday"
+                                                name="sunday"
+                                                [disabled]="assetDetail.siteOperatingHours || this.isEditable"
+                                                (click)="pushDays(!sunday,7)">Sunday
+                                        </label>
+                                    </div>
+
+                                    <!-- -----------------Weekdays ------------------->
+                                    <div class="form-group row" style="margin:25px 0 0 0;"
+                                        *ngIf="selectDays=='Weekdays'" [style.display]="this.visibleDays">
+                                        <label for="inputEntityName" class="col-sm-1 col-form-label cu-lable">From:*
+                                        </label>
+                                        <div class="col-sm-2" style="margin-right: -30px; margin-left: 10px;">
+                                            <input type="number" min="1" max="12" class="form-control cu-input"
+                                                style="padding-left: 2px;"
+                                                [(ngModel)]="assetDetail.opHours.weekdays.time.from.hh" name="fromHours"
+                                                required [disabled]="assetDetail.siteOperatingHours || this.isEditable">
+                                        </div>
+                                        <div class="col-sm-2" style="margin-right: -30px;">
+                                            <input type="number" min="0" max="60" class="form-control cu-input"
+                                                style="padding-left: 2px;"
+                                                [(ngModel)]="assetDetail.opHours.weekdays.time.from.mm" name="fromMins"
+                                                required [disabled]="assetDetail.siteOperatingHours || this.isEditable">
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <select class="form-control cu-input" style="padding-left: 2px;"
+                                                [(ngModel)]="assetDetail.opHours.weekdays.time.from.meridiem"
+                                                name="selectFromAmPm" required
+                                                [disabled]="assetDetail.siteOperatingHours || this.isEditable">
+                                                <option>AM</option>
+                                                <option>PM</option>
+                                            </select>
+                                        </div>
+
+                                        <label for="inputEntityName"
+                                            class="col-sm-1 col-form-label cu-lable">To:*</label>
+                                        <div class="col-sm-2" style="margin-right: -30px; margin-left: -10px;">
+                                            <input type="number" max="12" min="1" class="form-control cu-input"
+                                                style="padding-left: 2px;"
+                                                [(ngModel)]="assetDetail.opHours.weekdays.time.to.hh" name="toHours"
+                                                required [disabled]="assetDetail.siteOperatingHours || this.isEditable">
+                                        </div>
+                                        <div class="col-sm-2" style="margin-right: -30px;">
+                                            <input type="number" max="60" min="0" class="form-control cu-input"
+                                                style="padding-left: 2px;"
+                                                [(ngModel)]="assetDetail.opHours.weekdays.time.to.mm" name="toMins"
+                                                required [disabled]="assetDetail.siteOperatingHours || this.isEditable">
+                                        </div>
+                                        <div class="col-sm-2" style="margin-right: -30px;">
+                                            <select class="form-control cu-input" style="padding-left: 2px;"
+                                                [(ngModel)]="assetDetail.opHours.weekdays.time.to.meridiem"
+                                                name="selectToAmPm" required
+                                                [disabled]="assetDetail.siteOperatingHours || this.isEditable">
+                                                <option>AM</option>
+                                                <option>PM</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!--------------- weekdays ends--------------- -->
+
+                                    <!-- -----------------weekend ------------------->
+                                    <div class="form-group row" style="margin:25px 0 0 0;"
+                                        [style.display]="this.visibleEnd">
+                                        <label for="inputEntityName" class="col-sm-1 col-form-label cu-lable">From:*
+                                        </label>
+                                        <div class="col-sm-2" style="margin-right: -30px; margin-left: 10px;">
+                                            <input type="number" min="1" max="12" class="form-control cu-input"
+                                                style="padding-left: 2px;"
+                                                [(ngModel)]="assetDetail.opHours.weekend.time.from.hh" name="fromHours"
+                                                required [disabled]="assetDetail.siteOperatingHours || this.isEditable">
+                                        </div>
+                                        <div class="col-sm-2" style="margin-right: -30px;">
+                                            <input type="number" min="0" max="60" class="form-control cu-input"
+                                                style="padding-left: 2px;"
+                                                [(ngModel)]="assetDetail.opHours.weekend.time.from.mm" name="fromMins"
+                                                required [disabled]="assetDetail.siteOperatingHours || this.isEditable">
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <select class="form-control cu-input" style="padding-left: 2px;"
+                                                [(ngModel)]="assetDetail.opHours.weekend.time.from.meridiem"
+                                                name="selectFromAmPm" required
+                                                [disabled]="assetDetail.siteOperatingHours || this.isEditable">
+                                                <option>AM</option>
+                                                <option>PM</option>
+                                            </select>
+                                        </div>
+
+                                        <label for="inputEntityName"
+                                            class="col-sm-1 col-form-label cu-lable">To:*</label>
+                                        <div class="col-sm-2" style="margin-right: -30px; margin-left: -10px;">
+                                            <input type="number" max="12" min="1" class="form-control cu-input"
+                                                style="padding-left: 2px;"
+                                                [(ngModel)]="assetDetail.opHours.weekend.time.to.hh" name="toHours"
+                                                required [disabled]="assetDetail.siteOperatingHours || this.isEditable">
+                                        </div>
+                                        <div class="col-sm-2" style="margin-right: -30px;">
+                                            <input type="number" max="60" min="0" class="form-control cu-input"
+                                                style="padding-left: 2px;"
+                                                [(ngModel)]="assetDetail.opHours.weekend.time.to.mm" name="toMins"
+                                                required [disabled]="assetDetail.siteOperatingHours || this.isEditable">
+                                        </div>
+                                        <div class="col-sm-2" style="margin-right: -30px;">
+                                            <select class="form-control cu-input" style="padding-left: 2px;"
+                                                [(ngModel)]="assetDetail.opHours.weekend.time.to.meridiem"
+                                                name="selectToAmPm" required
+                                                [disabled]="assetDetail.siteOperatingHours || this.isEditable">
+                                                <option>AM</option>
+                                                <option>PM</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!--------------- weekend ends--------------- -->
+
+
+
+                                </div>
+                            </div>
+
+                            <!-- right-bottom -->
+                            <div class="right-panel-bottom">
+                                <div class="basic-info">
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <span class="title">Preventive Maintenance* </span>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="form-group row">
+                                        <label for="inputEntityName"
+                                            class="col-sm-5 col-form-label cu-lable">Criterion*</label>
+                                        <div class="col-sm-6">
+                                            <select class="form-control cu-input"
+                                                [(ngModel)]="assetDetail.preventiveMaintenance.criteria"
+                                                name="selectCriterion" [disabled]="this.isEditable">
+                                                <option>Fixed Frequency</option>
+                                                <option>By Usage - No. of trips</option>
+                                                <option>By Usage - Active time</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="inputEntityName" class="col-sm-5 col-form-label cu-lable"></label>
+                                        <div class="col-sm-6">
+                                            <div class="col-sm-6 misc-input-1">
+                                                <input type="text" class="form-control cu-input" id="inputEntityName"
+                                                    placeholder="Enter"
+                                                    [(ngModel)]="assetDetail.preventiveMaintenance.value" name="trips"
+                                                    [disabled]="this.isEditable">
+                                                <p
+                                                    *ngIf="assetDetail.preventiveMaintenance.criteria==='By Usage - No. of trips'">
+                                                    trips</p>
+                                            </div>
+
+                                            <!-- days and months -->
+                                            <div class="col-sm-6"
+                                                *ngIf="assetDetail.preventiveMaintenance.criteria==='Fixed Frequency'">
+                                                <select class="form-control cu-input"
+                                                    [(ngModel)]="assetDetail.preventiveMaintenance.units"
+                                                    name="selectDaysMonths" [disabled]="this.isEditable">
+                                                    <option>Days</option>
+                                                    <option>Months</option>
+                                                </select>
+                                            </div>
+
+                                            <!-- mins and hours -->
+                                            <div class="col-sm-6"
+                                                *ngIf="assetDetail.preventiveMaintenance.criteria==='By Usage - Active time'">
+                                                <select class="form-control cu-input" id="exampleFormControlSelect1"
+                                                    [(ngModel)]="assetDetail.preventiveMaintenance.units"
+                                                    name="selectMinsHours" [disabled]="this.isEditable">
+                                                    <option>Mins</option>
+                                                    <option>Hours</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group row" style="margin-bottom: -15px;">
+                                        <label for="inputEntityName" class="col-sm-5 col-form-label cu-lable">Next /
+                                            Last PM Date* </label>
+                                        <div class="col-sm-6">
+                                            <mat-form-field style="width: 94%;font-size: 18px;bottom: 18px">
+                                                <input matInput [matDatepicker]="picker" style=""
+                                                    [(ngModel)]="assetDetail.maintDt" name="date"
+                                                    [disabled]="this.isEditable">
+                                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /right-pannel -->
+                        <!-- submit button -->
+                        <div class="submit-btn-div pull-right" *ngIf="!this.isEditable">
+                            <div class="submit-button">
+                                <input value="Save" type="Submit">
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <!-- <div class="right-pannel float-left">
+            
+            <div style="height: 100%;overflow: hidden;">
+                <app-radio-tree [DisableParent]="false" [OPTreeViewHirarchyModel]="treeViewConfig"
+                    (OPEmitSelectedValue)="onEmit_TreeRadio($event)"></app-radio-tree>
+            </div>
+        </div> -->
+
+    </div>
+
+    <!-- <script>
+        Changes(x) {
+        
+        }
+        </script> -->
+
+</div>

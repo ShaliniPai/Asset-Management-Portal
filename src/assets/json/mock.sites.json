@@ -1,0 +1,70 @@
+[
+    {
+        "id": "44s566s55s4s",
+        "zone": "Zone 1",
+        "name": "Kormanagla",
+        "des": "Bangalore",
+        "loc": "",
+        "timezone": "+05:30",
+        "wifiSSID": "",
+        "wifiPassword": "",
+        "opHours": {
+            "weekdays": {
+                "days": [
+                    1,
+                    2,
+                    3,
+                    4
+                ],
+                "time": {
+                    "from": "06:00:00",
+                    "to": "22:00:00"
+                }
+            },
+            "weekend": {
+                "days": [
+                    6,
+                    7
+                ],
+                "time": {
+                    "from": "10:00:00",
+                    "to": "06:00:00"
+                }
+            }
+        }
+    },
+    {
+        "id": "55s566s55s4s",
+        "zone": "Zone 2",
+        "name": "Electronic City",
+        "des": "Bangalore",
+        "loc": "",
+        "timezone": "+05:30",
+        "wifiSSID": "",
+        "wifiPassword": "",
+        "opHours": {
+            "weekdays": {
+                "days": [
+                    1,
+                    2,
+                    3,
+                    4
+                ],
+                "time": {
+                    "from": "06:00:00",
+                    "to": "22:00:00"
+                }
+            },
+            "weekend": {
+                "days": [
+                    6,
+                    7
+                ],
+                "time": {
+                    "from": "10:00:00",
+                    "to": "06:00:00"
+                }
+            }
+        }
+    }
+]

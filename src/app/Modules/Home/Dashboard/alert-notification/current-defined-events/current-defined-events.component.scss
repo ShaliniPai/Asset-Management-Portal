@@ -1,0 +1,94 @@
+.table-type-border {
+    border: 2px solid #cacbcd;
+    padding: 1%;
+    max-height: 450px;
+    min-height: 450px;
+    /* overflow-y: auto; */
+    margin: 1px 20px;
+  }
+  
+  .fixed_header > tbody {
+    max-height: 350px !important; overflow-y: auto !important;
+  }
+  
+
+  .fixed_header {
+    width: 100%;
+    /* table-layout: fixed; */
+    table-layout: auto;
+    border-collapse: collapse;
+    position: relative;
+    margin-left:20px;
+  }
+
+  
+  .fixed_header tbody {
+    display: block;
+    min-width: 100% !important;
+    overflow-y: auto;
+    position: absolute;
+  }
+
+  tr.mat-header-row {
+    height: 50px;
+    border-bottom: 2px solid #cacbcd !important;
+  }
+  
+  .header-style{
+    color: black;
+    font-family:boschsansbold !important;
+    border-bottom: 2px solid #cacbcd;
+    /* border-bottom: none; */
+    }
+    .header-line-child{
+    //border-bottom: 1px solid #cacbcd;
+    font-family:boschsanslight !important;
+    }
+    .css-alert-box{   
+      border: 1px solid #cacbcd;
+      // padding-bottom: 25px;
+      overflow: auto;
+      max-height: 620px;
+    }
+    .UIbutton{
+      outline: 0;
+      width: 120px;
+      border: 1px  solid #02629f ;
+      padding: 5px;
+      color: #02629f ;
+      font-size: 17px;
+      background: white;
+      cursor: pointer;
+      height: 35px;
+      text-align: center;
+    }
+
+    tr.mat-header-row {
+width:70px;
+    }
+
+    th.mat-header-cell:last-of-type {
+      padding-right: 0px;
+  }
+
+  .parent-del {
+    border: none;
+    width: 100%;
+    border-radius: 0px;
+    position: fixed;
+    top: 100; right: 0; bottom: 0; left: 0;
+  }
+  .child-del {
+    background: #f6f6f6;
+    text-align: center;
+    //#ea0016
+  }
+
+  .Ico-Del {
+    fill:  #ea0016;
+  }
+  
+  .ico2 {
+    min-width: 30px !important;
+    height: 30px !important;
+   }

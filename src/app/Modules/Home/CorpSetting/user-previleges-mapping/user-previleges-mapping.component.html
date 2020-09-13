@@ -1,0 +1,65 @@
+<br>
+<div style="margin: 1px 25px" class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+      <button routerLink="/home/corp/user" class="rb-btn bt bt-d">Return to: Existing Users</button>
+    </div>
+  </div>
+  <hr />
+  <span class="title">Mapping of User Privileges</span>
+</div>
+<br>
+
+<div style="margin: 1px 20px" class="container-fluid">
+  <div class="row">
+
+    <div class="col-lg-12">
+      <table style="max-width: 90px">
+        <tr>
+          <td style="border-bottom-color: transparent !important;background-color: rgb(248, 248, 248);"
+            class="cellpadding-header" colspan="2"></td>
+          <td style="border-bottom-color: transparent !important;text-align: center" class="cellpadding-header title"
+            colspan="4"><span
+              style="text-align: center;color: rgb(0, 80, 155);font-weight: normal;font-size: 18px"><b>User
+                Privileges</b></span></td>
+        </tr>
+        <tr class="font-bold">
+          <td style="background-color: rgb(248, 248, 248);" class="cellpadding-header" colspan="2"></td>
+          <td style="border-right-color: transparent !important;text-align: center;" class="cellpadding-header"><span
+              class="font-bold">Administrative</span></td>
+          <td style="border-right-color: transparent !important;text-align: center;" class="cellpadding-header"><span
+              class="font-bold">Gatekeeping</span></td>
+          <td style="border-right-color: transparent !important;text-align: center;" class="cellpadding-header"><span
+              class="font-bold">Standard</span></td>
+          <td class="cellpadding" style="text-align: center;font-weight: bold;"><span
+              class="font-bold">Installation</span></td>
+        </tr>
+        <tr>
+          <td rowspan="4" style="min-width: 40px;max-width: 50px;background-color: #f7f7f7;"></td>
+        </tr>
+        <tr *ngFor="let data of userType">
+          <td style="min-width: 100px;max-width: 120px;background-color: rgb(248, 248, 248);z-index: 10;"
+            class="cellpadding">
+            <span class="font-bold;" style="text-transform:uppercase;">{{data}}</span>
+          </td>
+          <td *ngFor="let customData of newData[data]" class="cellpadding"
+            style="border-right-color: lightgray !important;text-align: center">
+            <mat-checkbox [disabled]="customData.isDisabled" [checked]="customData.isChecked" (change)="customData.isChecked=!customData.isChecked" color="primary"></mat-checkbox>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="maringal-180 rotate pull-left"><span
+        style="text-align: center;color: rgb(0, 80, 155);font-weight: bold;">User Type</span></div>
+
+  </div>
+  <br><br>
+  <span style="margin-top: 10% !important">
+
+    <mat-checkbox [checked]="restoreToDefault" (change)="changeToDefault()" color="primary" class="pull-left"></mat-checkbox> <span class="font-regular">&nbsp;&nbsp;&nbsp;&nbsp;
+      Restore Default Mapping</span>
+    <button class="rb-btn rb-primary bt pull-right" (click)="addUserPrevilages()">Save</button>
+  </span>
+</div>
+<br><br><br><br>

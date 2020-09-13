@@ -1,0 +1,25 @@
+<div class="default-padding" style="padding-left: 35px;">
+
+    <!-- --------------------------
+    View Sites in Table
+    ------------------------------------- -->
+    <div *ngIf="!sites && !isManageUnabled">
+        <button class="rb-btn rb-primary" style="margin-bottom: 10px; font-size:14px;" (click)="onAddSite()">Add New
+            Sites</button>
+        <br>
+        <mat-divider></mat-divider>
+        <app-sites-show (siteEmit)="onEmitterSitesInfo($event)"></app-sites-show>
+
+    </div>
+    <!-- --------------------------
+    Manage Site Information Insert/update
+    ------------------------------------- -->
+    <div *ngIf="sites || isManageUnabled">
+        <button mat-button (click)="onBack()" style="font-weight: 400;margin-bottom: 10px;padding-left: 0;"><img
+                src="../../../../../assets/Images/Icons/back_btn.png">&nbsp;&nbsp;Return to:
+            Existing Sites</button>
+        <br>
+        <mat-divider></mat-divider>
+        <app-sites-manage [InputSiteRow]="sites"></app-sites-manage>
+    </div>
+</div>

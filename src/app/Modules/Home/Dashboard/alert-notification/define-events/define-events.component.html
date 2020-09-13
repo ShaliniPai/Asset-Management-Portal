@@ -1,0 +1,351 @@
+<mat-drawer-container style="height: 100%;width: 100%;">
+    <mat-drawer [opened]="true" [position]="'end'" [mode]="'side'" #sidenav
+        style="min-width: 350px;max-width: 350px;background-color:rgb(250, 250, 250);">
+        <div style="padding: 20px;">
+
+            <!-- --------------------------------- **
+                    Tree View For Seleted Machines
+                ----------------------------------- -->
+            <div style="height: 100%;overflow: hidden;" *ngIf="!isRequireToResetTree">
+                <!-- <h6 style="font-weight: 400;font-size: 18px">Select Assets</h6> -->
+                <app-radio-tree [DisableParent]="false" [OPTreeViewHirarchyModel]="treeViewConfig"
+                     (OPEmitSelectedValue)="onEmit_TreeRadio($event)"></app-radio-tree>
+
+            </div>
+        </div>
+    </mat-drawer>
+    <mat-drawer-content style="background-color: white;height:100%;overflow: auto;" class="default-padding">
+        <div class="layout-margin">
+            <form #form="ngForm" [formGroup]="fg">
+                <div style=" padding: 5px;margin:5px;">
+                    <div style="margin-bottom: 15px;font-family: boschsansmed;font-weight: 400;font-size: 20px;">
+                        Define Event <em class="fa fa-pencil text-light-blue"></em>
+                    </div>
+
+                    <!-- xxxxxxxxxxxxxxxxxxxx  Window  Size  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
+                    <div class="layout-row" style="height: 225px;">
+                        <div style="width:20%;">
+                            <div class="box-body" style="border: 1px solid #dfe4e7;;padding:6px 10px">
+                                <div class="headings"
+                                    style="font-weight: 400;font-family: boschsansmed;font-size: 18px;">Metric Window
+                                </div>
+                                <div style="margin-left:15px;width:50%">
+                                    <mat-radio-group [formControlName]="'window'" style="display:flex;"
+                                        value='currentDay' required>
+                                        <div class="layout-col">
+                                            <div style="margin-top:7px;">
+                                                <mat-radio-button (change)="onChange($event)" value='currentDay'
+                                                    [checked]='true' style="width: 250px; margin-top: 2px;">Current Day
+                                                </mat-radio-button>
+                                            </div>
+                                            <div style="margin-top:9px;">
+                                                <mat-radio-button (change)="onChange($event)" value='lastSDays'
+                                                    style="width: 250px;margin-top: 6px;">Last 7 days</mat-radio-button>
+                                            </div>
+                                            <div style="margin-top:11px;margin-bottom:60px;">
+                                                <mat-radio-button (change)="onChange($event)" value='lastTDays'
+                                                    style="width: 250px; margin-top: 6px">Last 30 days
+                                                </mat-radio-button>
+                                            </div>
+                                        </div>
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="flex: auto 1;margin-top: -2px; height: 225px;">
+                            <!--xxxxxxxxxxxxxxxxxxxxxxxxx      Criteria         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
+                            <div style="padding: 2px 10px;" *ngIf="fg.controls.window.value === 'currentDay'">
+                                <div class="box-body  padding" style="border: 1px solid #dfe4e7;padding: 12px 10px">
+                                    <div class="headings"
+                                        style="font-weight: 400;font-family: boschsansmed;font-size: 18px;margin-bottom:3px;">
+                                        Criterion</div>
+                                    <div style="margin: 0 0 0 15px;width:50%">
+                                        <mat-radio-group [formControlName]="'criteria'"
+                                            [(ngModel)]="criteriaForCurrentDay" required>
+                                            <div class="layout-col" style="width:550px;">
+                                                <div class="layout-row">
+                                                    <mat-radio-button value="I-L" style="width: 250px" class="headings"
+                                                        style="overflow: hidden;margin-top:7px"
+                                                        (change)="onChange1($event)">IDLE Longer than</mat-radio-button>
+                                                    <input *ngIf="isDisable" type="number" maxlength="50"
+                                                        appAllowholenumebrs
+                                                        style="height: 30px; width: 7%; margin-left: 10px;text-align: center;padding: 0 2px"
+                                                        disabled>
+                                                    <input *ngIf="!isDisable" type="number" maxlength="50"
+                                                        appAllowholenumebrs [formControlName]="'th1'"
+                                                        style="height: 30px; width: 7%; margin-left: 10px;text-align: center;padding: 0 2px">
+                                                    <span class="headings"
+                                                        style="margin-left: 9px;padding-top: 7px;">mins</span>
+                                                </div>
+                                                <div class="layout-row" style="margin-top:7px;">
+                                                    <mat-radio-button value="D-L" (change)="onChange1($event)"
+                                                        style="overflow: hidden;margin-top:7px" class="headings">
+                                                        Down-OFF
+                                                        longer than</mat-radio-button>
+                                                    <input *ngIf="!isDisable1" type="number" maxlength="50"
+                                                        appAllowholenumebrs [formControlName]="'th2'"
+                                                        style="height: 30px; width: 7%; margin-left: 10px;text-align: center;padding: 0 2px">
+                                                    <input *ngIf="isDisable1" type="number" maxlength="50"
+                                                        appAllowholenumebrs
+                                                        style="height: 30px; width: 7%; margin-left: 10px;text-align: center;padding: 0 2px;"
+                                                        disabled>
+                                                    <span class="headings"
+                                                        style="margin-left: 9px;padding-top: 7px;">mins</span>
+                                                </div>
+                                                <div class="layout-row" style="margin-top:7px;">
+                                                    <mat-radio-button value="A-O" (change)="onChange1($event)"
+                                                        style="overflow: hidden;margin-top:7px" class="headings">Asset
+                                                        ON
+                                                        during non-operational hours more than</mat-radio-button>
+                                                    <input *ngIf="!isDisable2" type="number" maxlength="50"
+                                                        appAllowholenumebrs [formControlName]="'th3'"
+                                                        style="height: 30px; width: 7%; margin-left: 10px;text-align: center;padding: 0 2px;">
+                                                    <input *ngIf="isDisable2" type="number" maxlength="50"
+                                                        appAllowholenumebrs
+                                                        style="height: 30px; width: 7%; margin-left: 10px;text-align: center;padding: 0 2px;"
+                                                        disabled>
+                                                    <span class="headings"
+                                                        style="margin-left: 9px;padding-top: 7px;">mins</span>
+                                                </div>
+                                                <div class="layout-row" style="margin-top:7px;">
+                                                    <mat-radio-button value="U-L" (change)="onChange1($event)"
+                                                        style="overflow: hidden;margin-top:7px" class="headings">
+                                                        Utilization
+                                                        less than</mat-radio-button>
+                                                    <input *ngIf="!isDisable3" type="number" maxlength="50"
+                                                        appAllowholenumebrs [formControlName]="'th4'"
+                                                        style="height: 30px; width: 7%; margin-left: 10px;text-align: center;padding: 0 2px;">
+                                                    <input *ngIf="isDisable3" type="number" maxlength="50"
+                                                        appAllowholenumebrs
+                                                        style="height: 30px; width: 7%; margin-left: 10px;text-align: center;padding: 0 2px;"
+                                                        disabled>
+                                                    <span class="headings"
+                                                        style="margin-left: 9px;padding-top: 7px;">%</span>
+                                                </div>
+                                            </div>
+                                        </mat-radio-group>
+                                    </div>
+                                    <br style="display: block;margin: 5px;">
+
+                                </div>
+                            </div>
+
+                            <!--xxxxxxxxxxxxxxxxxxxxxxxxx      Criteria for 7 and 30 days        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
+                            <div style="margin: 2px 10px; " *ngIf="fg.controls.window.value !== 'currentDay'">
+                                <div class="box-body padding" style="border: 1px solid #dfe4e7;padding: 6px 10px">
+                                    <div class="headings"
+                                        style="font-weight: 400;font-family: boschsansmed;font-size: 18px;margin-bottom:3px;">
+                                        Criterion</div>
+
+                                    <div style="margin: 0 0 0 15px;width:50%">
+                                        <mat-radio-group [formControlName]="'criteria'"
+                                            [(ngModel)]="criteriaForLastSandTDays" required>
+                                            <div class="layout-col" style="width:550px;">
+                                                <div class="layout-row">
+                                                    <mat-radio-button value="D-D" class="headings"
+                                                        style="overflow: hidden;margin-top:7px"
+                                                        (change)="onChange2($event)">Average "DOWNTIME per day" greater
+                                                        than
+                                                    </mat-radio-button>
+                                                    <input *ngIf="isDisable4" type="number" maxlength="50"
+                                                        appAllowholenumebrs
+                                                        style="height: 30px; width: 7%; margin-left: 10px;text-align: center;padding: 0 2px;"
+                                                        disabled>
+                                                    <input *ngIf="!isDisable4" type="number" maxlength="50"
+                                                        appAllowholenumebrs [formControlName]="'th5'"
+                                                        style="height: 30px; width: 7%; margin-left: 10px;text-align: center;padding: 0 2px;">
+                                                    <span class="headings"
+                                                        style="margin-left: 9px;padding-top: 7px;">mins</span>
+
+                                                </div>
+                                                <div class="layout-row" style="margin-top:7px;">
+                                                    <mat-radio-button value="E-D" (change)="onChange2($event)"
+                                                        style="overflow: hidden;margin-top:7px" class="headings">Average
+                                                        "ENERGY per day" greater than</mat-radio-button>
+                                                    <input *ngIf="!isDisable5" type="number" maxlength="50"
+                                                        appAllowholenumebrs [formControlName]="'th6'"
+                                                        style="height: 30px; width: 7%; margin-left: 10px;text-align: center;padding: 0 2px;">
+                                                    <input *ngIf="isDisable5" type="number" maxlength="50"
+                                                        appAllowholenumebrs
+                                                        style="height: 30px; width: 7%; margin-left: 10px;text-align: center;padding: 0 2px;"
+                                                        disabled>
+                                                    <span class="headings"
+                                                        style="margin-left: 9px;padding-top: 7px;">kWhr</span>
+                                                </div>
+                                                <div class="layout-row" style="margin-top:7px;">
+                                                    <mat-radio-button value="U-LT" (change)="onChange2($event)"
+                                                        style="overflow: hidden;margin-top:7px" class="headings">
+                                                        UTILIZATION
+                                                        less than </mat-radio-button>
+                                                    <input *ngIf="!isDisable6" type="number" maxlength="50"
+                                                        appAllowholenumebrs [formControlName]="'th7'"
+                                                        style="height: 30px; width: 7%; margin-left: 10px;margin-bottom:39px;text-align: center;padding: 0 2px;">
+                                                    <input *ngIf="isDisable6" type="number" maxlength="50"
+                                                        appAllowholenumebrs
+                                                        style="height: 30px; width: 7%; margin-left: 10px;margin-bottom:39px;text-align: center;padding: 0 2px;"
+                                                        disabled>
+                                                    <span class="headings"
+                                                        style="margin-left: 9px;padding-top: 7px;">%</span>
+                                                </div>
+                                            </div>
+                                        </mat-radio-group>
+                                    </div>
+                                    <br style="display: block;margin: 5px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         Notification Medium         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
+
+                    <div class="layout-row" style="height: 275px;">
+                        <div style="width:20%;margin-top: 10px;">
+                            <div class="box-body padding" style="border: 1px solid #dfe4e7;;padding:10px 10px;">
+                                <div style="font-weight: 400;
+                                font-family: boschsansmed;
+                                font-size: 18px;
+                                margin-right: 20px;">
+                                    Medium</div>
+                                <br style="display: block;margin: 5px;">
+                                <div style="margin: -10px 0 175px 15px;width:50%" class="layout-row">
+                                    <mat-checkbox [formControlName]="'Check1'" required color="blue" value="SMS"
+                                        (change)="onChangeCheck1($event)" class="example-margin"
+                                        style="padding-right:38px">SMS</mat-checkbox>
+                                    <mat-checkbox [formControlName]="'Check2'" color="blue" value="E-Mail"
+                                        (change)="onChangeCheck2($event)" class="example-margin"
+                                        style="padding-right:38px">E- mail</mat-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                        <!--  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx   Levels    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
+                        <div style="margin: 10px 10px;flex: auto 1;">
+                            <div class="box-body padding"
+                                style="border: 1px solid #dfe4e7;;padding:10px 10px 11px 10px">
+                                <div class="headings"
+                                    style="font-weight: 400;font-family: boschsansmed;font-size: 18px;margin-right: 20px;">
+                                    Recipients</div>
+                                <div class="layout-row">
+
+                                    <div style="width:210px" class="layout-row">
+                                        <div class="layout-col"
+                                            style="margin-left:20px;margin-right: 35px;margin-top:10px">
+                                            <div class="headings" for="dsel">Level 1</div>
+                                            <mat-form-field
+                                                style="width: 200px;height: 40px;font-family: boschsanslight; font-size: 16px;padding-left: 13px;border: 1px solid #d1d1d1;margin-top:4px;">
+
+                                                <mat-select [formControlName]="'level1'"
+                                                    (selectionChange)="Level1(fg.controls.level1.value)">
+                                                    <mat-option value='0'>Name of User</mat-option>
+                                                    <mat-option *ngFor="let user of usersList"
+                                                        [value]="user.unique_key">{{user.firstName}} {{user.lastName}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                            <mat-form-field
+                                                style="width: 200px;height: 40px;font-family: boschsanslight; font-size: 16px;padding-left: 13px;border: 1px solid #d1d1d1;margin-top:20px">
+
+                                                <mat-select [formControlName]="'level11'"
+                                                    (selectionChange)="Level11(fg.controls.level11.value)">
+                                                    <mat-option value='0'>Name of User</mat-option>
+                                                    <mat-option *ngFor="let user of usersList"
+                                                        [value]="user.unique_key">{{user.firstName}} {{user.lastName}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                            <mat-form-field
+                                                style="width: 200px;height: 40px;font-family: boschsanslight; font-size: 16px;padding-left: 13px;border: 1px solid #d1d1d1;margin-top:20px">
+                                                <mat-select [formControlName]="'level12'"
+                                                    (selectionChange)="Level12(fg.controls.level12.value)">
+                                                    <mat-option value='0'>Name of User</mat-option>
+                                                    <mat-option *ngFor="let user of usersList"
+                                                        [value]="user.unique_key">{{user.firstName}} {{user.lastName}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="layout-col">
+                                            <div style="width:210px" style="margin-right: 35px;margin-top:10px">
+                                                <div class="headings" for="dsel">Level 2<span class="italic disabled"
+                                                        style="opacity: 0.4;padding-top:14px"> (Optional)</span></div>
+                                                <mat-form-field
+                                                    style="width: 200px;height: 40px;font-family: boschsanslight; font-size: 16px;padding-left: 13px;border: 1px solid #d1d1d1;margin-top:4px">
+                                                    <mat-select
+                                                        [disabled]="(fg.controls.level1.value === '0' && fg.controls.level11.value === '0' && fg.controls.level12.value === '0') || fg.controls.window.value !== 'currentDay'"
+                                                        [formControlName]="'level2'"
+                                                        (selectionChange)="Level2(fg.controls.level2.value)">
+                                                        <mat-option value='0'>Name of User</mat-option>
+                                                        <mat-option *ngFor="let user of usersList"
+                                                            [disabled]="(fg.controls.level1.value === '0' && fg.controls.level11.value === '0' && fg.controls.level12.value === '0') || fg.controls.window.value !== 'currentDay'"
+                                                            [value]="user.unique_key">{{user.firstName}}
+                                                            {{user.lastName}}</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="layout-row" style="width: 166%;margin-top:15px"
+                                                id="{{PerClass}}">
+                                                <div class="headings" style="margin-top:45px" for="dsel">Persistence
+                                                    Duration</div>
+                                                <div class="flex" style="margin-left:8px;margin-top:35px">
+                                                    <input type="number" maxlength="50" appAllowholenumebrs
+                                                        [formControlName]="'per'"
+                                                        style="margin-top:5px;text-align: center;width:21%;height:28px;"
+                                                        class="DisablePer"
+                                                        [disabled]="fg.controls.level2.value === '0'"><span
+                                                        style="margin-left:5px;">mins</span>
+                                                    <br />
+                                                    <span class="italic disabled"
+                                                        style="padding-top:2px;margin-left: 0px !important;"
+                                                        *ngIf="Text !== '' ">{{Text}}</span>
+                                                    <span class="italic disabled"
+                                                        style="padding-top:2px;color:#FFF;margin-left: 0px !important;"
+                                                        *ngIf="Text === '' ">Optional</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="width:210px;margin-top:10px">
+                                            <div class="headings" for="dsel">Level 3<span class="italic disabled"
+                                                    style="opacity: 0.4;padding-top:4px"> (Optional)</span></div>
+                                            <mat-form-field
+                                                style="width: 200px;height: 40px;font-family: boschsanslight; font-size: 16px;padding: 0 0 0px 13px;border: 1px solid #d1d1d1;margin-top:4px;">
+
+                                                <mat-select
+                                                    [disabled]="fg.controls.level2.value === '0' || fg.controls.window.value !== 'currentDay'"
+                                                    [formControlName]="'level3'">
+                                                    <mat-option value='0'>Name of User</mat-option>
+                                                    <mat-option *ngFor="let user of usersList"
+                                                        [disabled]="fg.controls.level2.value === '0' || fg.controls.window.value !== 'currentDay'"
+                                                        [value]="user.unique_key">{{user.firstName}} {{user.lastName}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:15px;margin-bottom:110px">
+
+                        <div class="pull-left"
+                            style=" display: flex; justify-content: center; margin-right: 100px; margin-top:2px;">
+                            <div style="padding: 0px 10px 0px 0px">
+                                <input class="{{classReset}}" value="Reset" type="Submit" (click)="reset()"
+                                    style="height: 40px; width: 135px;">
+                            </div>
+                            <div>
+                                <input class="{{classButton}}" (keyup)="onKeyUp($event)" value="Submit" type="submit"
+                                    (click)="PostData()" style="height: 40px; width: 135px"
+                                    [disabled]="!isAssetEnable || !isCriteriaEnable || !isLevelenable || (!isSMSenable && !isEmailenable)">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+    </mat-drawer-content>
+</mat-drawer-container>
